@@ -6,7 +6,6 @@
 * Classes: BufferedReader and Scanner
 * */
 
-
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -26,15 +25,19 @@ public class RolePlayingGame {
                 switch (move) { // added (value) to switch statement to indicate what is value is being checked
                     case 'N': /** (i.e: if (move) == 'N') */
                         System.out.println("You move 10 meters North");
+                        coordinates[0] += 10;
                         break; /** added 'break' statement to avoid falling through */
                     case 'S':
                         System.out.println("You move 10 meters South");
+                        coordinates[0] -= 10;
                         break; /** added 'break' statement to avoid falling through */
                     case 'E':
                         System.out.println("You move 10 meters East");
+                        coordinates[1] += 10;
                         break; /** added 'break' statement to avoid falling through */
                     case 'W':
                         System.out.println("You move 10 meters West");
+                        coordinates[1] -= 10;
                         break; /** added 'break' statement to avoid falling through */
                     case 'P':
                         printDirections();
@@ -54,7 +57,7 @@ public class RolePlayingGame {
             is essentially an
             */
         }
-        scanner.close()/** close scanner to */
+        scanner.close();/** close scanner */
         /**
         moved below println outside of while since a true value of 'flag' means one is playing game,
         and game is over
@@ -67,21 +70,21 @@ public class RolePlayingGame {
                 "Type 'E' to move East\nType 'W' to move West");
         System.out.println("Type 'Q' to quit\nType 'P' to re-print directions");
     }
-
+    /** function that prints out final location) */
     public static void printFinalLocation(int[] coordinates) {
       String direction = "";
-      int distance;
+      double distance;
       // assess north/south
       if (coordinates[0] > 1) {
         direction += "North";
-      } else {
+      } else if (coordinates[0] < 0){
         direction += "South";
       }
 
       //assess east/west
-      if (coordinate[1] > 1) {
+      if (coordinates[1] > 1) {
         direction += "East";
-      } else {
+      } else if (coordinates[1] < 0){
         direction += "West";
       }
       // calculate hypotenuse
@@ -90,11 +93,10 @@ public class RolePlayingGame {
       } else if (coordinates[1] == 0) { // if no traingle
         distance = coordinates[0];
       } else { // calculate hypotenuse a^2 + b^2 = c^2
-        distance = Math.sqrt(Math.pow((double)coordinates[0], 2.0) + Math.pow((double), 2.0));
+        distance = Math.sqrt(Math.pow((double)coordinates[0], 2.0) + Math.pow((double)coordinates[1], 2.0));
       }
 
-
-      System.out.println("You are " + distance + " meters " +  direction +
+      System.out.println("You are " + Math.floor(distance) + " meters " +  direction +
       " from your original location");
     }
 }
