@@ -10,8 +10,11 @@ import java.util.Scanner;
 
 public class Homework1 {
   public static void main(String[] args) {
-    int emplId, months, quiz;
-    double score, temp, average;
+    // declare constant for degree symbol
+    final char DEGREE = '\u00b0';
+    // declare necessary values to store input and caluclations
+    int emplId, months, years, quiz, j;
+    double score, average, degreesC, degreesF;
     double[] scores = new double[3];
 
     // Get user input EmplID using scanner
@@ -22,22 +25,46 @@ public class Homework1 {
     // Fill scores array with user input
     for (int i = 0; i < scores.length; i++) {
       quiz = i + 1;
-      System.out.println("\nEnter your quiz" + quiz + " percentage score (0.0 - 100.0): ");
+      System.out.print("\nEnter your quiz" + quiz + " percentage score (0.0 - 100.0): ");
       score = sc.nextDouble();
       scores[i] = score;
     }
+    // calculate and store average using helper function
+    average = averageScores(scores);
 
+    // prompt user for age in months; calculate and store conversion to years
     System.out.print("\nEnter your age in months (0 - 1440): ");
     months = sc.nextInt();
+    years = convertToYears(months);
 
+    //prompt user for temperatute in C; calculate and save conversion to Farenheit
     System.out.print("\nEnter the current Temperature in degrees Celsius (ex. 19.0): ");
-    temp = sc.nextDouble();
+    degreesC = sc.nextDouble();
+    degreesF = convertToF(degreesC);
 
+    // close scanner
+    sc.close();
+    // print inputted information
+    j = 0;
+    System.out.println("***Thank You**");
+    System.out.println("Your student EMPLID: " + emplId);
+
+    while (j < scores.length) {
+      quiz = j + 1;
+      System.out.println("Quiz " + quiz + " Score: " + scores[j]);
+      j++;
+    }
+
+    System.out.println("Average quiz score: " + average);
+    System.out.println("Age in months: " + months);
+    System.out.println("Age in years: " + years);
+    System.out.println("Temperature in Celsius: " + degreesC + DEGREE);
+    System.out.println("Temperature in Fahrenheit: " + degreesF + DEGREE);
   }
   // helper method to convert F to C
-  public static double convertToCelsius(double f) {
+  public static double convertToF(double c) {
     // return converted value
-    return (f - 32) * (5.0 / 9.0);
+    return c * (9.0 / 5.0) + 32;
   }
   // helper method that averages inputted scores
   public static double averageScores(double[] scores) {
