@@ -62,6 +62,7 @@ public class Homework1 {
     System.out.println("Temperature in Fahrenheit: " + degreesF + DEGREE);
   }
   // helper method to convert F to C
+
   public static double convertToF(double c) {
     // return converted value
     return c * (9.0 / 5.0) + 32;
