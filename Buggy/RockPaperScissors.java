@@ -11,7 +11,7 @@ public class RockPaperScissors {
     final String[] OPTIONS = {ROCK, PAPER, SCISSORS};
     // declare and assign game states
     String result = "";
-    int wins = 0, losses = 0;
+    int wins = 0, losses = 0, ties = 0;
     int gamesCount, randomIdx;
     boolean stillPlaying = true;
     String compChoice;
@@ -23,10 +23,12 @@ public class RockPaperScissors {
     System.out.println("ROCK PAPER SCISSORS");
     System.out.println("*******************");
     System.out.println("You will play Rock Paper Scissors (best out of 5 with the computer).");
-    System.out.println("There will be up to 5 rounds where you can win or lose (ties do not count), but the game will automatically end when a total of 3 have been won by either player.");
+    System.out.println("There will be up to 5 rounds that can be won or lost");
+    System.out.println("The game will end when a total of 3 rounds have been won by either player.");
     //
     while (stillPlaying) {
       //prompt user for choice
+      System.out.println("*******************");
       if (wins == 2 && losses == 2) {
         System.out.println("You both have 2 wins! This is the TIE-BREAKER!!!");
       }
@@ -46,6 +48,7 @@ public class RockPaperScissors {
             losses++;
           } else { // do nothing if tie
             System.out.println("You both chose ROCK. This round is a tie!");
+            ties++;
           }
           break;
         case SCISSORS:
@@ -57,17 +60,19 @@ public class RockPaperScissors {
             losses++;
           } else { // do nothing if tie
             System.out.println("You both chose SCISSORS. This round is a tie!");
+            ties++;
           }
           break;
         case PAPER:
           if (compChoice == ROCK) { // increment wins if won
-            System.out.println("You chose PAPER and Computer chose ROCK. You Wins!");
+            System.out.println("You chose PAPER and Computer chose ROCK. You win!");
             wins++;
           } else if (compChoice ==  SCISSORS) { // increment losses if loses
-            System.out.println("You chose PAPER and Computer chose SCISSORS. Computer Wins!");
+            System.out.println("You chose PAPER and Computer chose SCISSORS. Computer wins!");
             losses++;
           } else { // do nothing if tie
             System.out.println("You both chose PAPER. This round is a tie!");
+            ties++;
           }
           break;
         case QUIT: // print final strings and exit if user wants to quit
@@ -89,8 +94,9 @@ public class RockPaperScissors {
         stillPlaying = false;
       }
     }
-
+    System.out.println("*******************");
     System.out.println("You" + result + "the computer!");
+    System.out.println("Final results... You: " + wins + ", Computer: " + losses + ", Ties:" + ties + ".");
     System.out.println("Thanks for playing! See you next time!");
   }
 }
