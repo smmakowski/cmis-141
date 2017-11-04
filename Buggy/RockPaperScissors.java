@@ -4,36 +4,93 @@ import java.util.Random;
 public class RockPaperScissors {
   public static void main(String[] args) {
     // declare/assign choice constants
-    final char ROCK = 'R';
-    final char PAPER = 'P';
-    final char SCISSORS = 'S';
+    final String ROCK = "R";
+    final String PAPER = "P";
+    final String SCISSORS = "S";
+    final String QUIT = "Q";
+    final String[] OPTIONS = {ROCK, PAPER, SCISSORS};
     // declare and assign game states
+    String result = "";
     int wins = 0, losses = 0;
-    int gamesCount;
-    boolean stillPlaying;
-    char continuePlaying;
-    char compChoice;
-    char userChoice;
-
+    int gamesCount, randomIdx;
+    boolean stillPlaying = true;
+    String compChoice;
+    String userChoice;
+    // create random, and scanner objects to use methods
     Random rand = new Random();
     Scanner scan = new Scanner(System.in);
-
-    System.out.println("Let's play Rock Paper Scissors with the computer!");
-    System.out.println("You can play up to 5 rounds against the computer");
-
-    while (stillPlaying && wins < 3 && losses < 3) {
-      System.out.println("What is your choice for this round (Enter 'R' for Rock,\
-      'P' for Paper, or 'S' for Scissors)?");
-      Scanner s = new Scanner(System.in);
-      userChoice = s.next();
-
-      if () {
-
+    // print opening information
+    System.out.println("ROCK PAPER SCISSORS");
+    System.out.println("*******************");
+    System.out.println("You will play Rock Paper Scissors (best out of 5 with the computer).");
+    System.out.println("There will be up to 5 rounds where you can win or lose (ties do not count), but the game will automatically end when a total of 3 have been won by either player.");
+    //
+    while (stillPlaying) {
+      //prompt user for choice
+      if (wins == 2 && losses == 2) {
+        System.out.println("You both have 2 wins! This is the TIE-BREAKER!!!");
+      }
+      System.out.println("What is your choice for this round (Enter 'R' for Rock, 'P' for Paper, 'S' for Scissors, or 'Q' to forfeit and quit the game')?");
+      userChoice = scan.next().toUpperCase();
+      // randomly generate computer choice
+      randomIdx = rand.nextInt(3);
+      compChoice = OPTIONS[randomIdx];
+      // use switch to determine winner and increment score
+      switch (userChoice) {
+        case ROCK: // handle possibilities for each option
+          if (compChoice == SCISSORS) { // increment wins if won
+            System.out.println("You chose ROCK and Computer chose SCISSORS. You Wins!");
+            wins++;
+          } else if (compChoice ==  PAPER) { // increment losses if loses
+            System.out.println("You chose ROCK and Computer chose PAPER. Computer Wins!");
+            losses++;
+          } else { // do nothing if tie
+            System.out.println("You both chose ROCK. This round is a tie!");
+          }
+          break;
+        case SCISSORS:
+          if (compChoice == PAPER) { // increment wins if won
+            System.out.println("You chose SCISSORS and Computer chose PAPER. You Wins!");
+            wins++;
+          } else if (compChoice ==  ROCK) { // increment losses if loses
+            System.out.println("You chose SCISSORS and Computer chose ROCK. Computer Wins!");
+            losses++;
+          } else { // do nothing if tie
+            System.out.println("You both chose SCISSORS. This round is a tie!");
+          }
+          break;
+        case PAPER:
+          if (compChoice == ROCK) { // increment wins if won
+            System.out.println("You chose PAPER and Computer chose ROCK. You Wins!");
+            wins++;
+          } else if (compChoice ==  SCISSORS) { // increment losses if loses
+            System.out.println("You chose PAPER and Computer chose SCISSORS. Computer Wins!");
+            losses++;
+          } else { // do nothing if tie
+            System.out.println("You both chose PAPER. This round is a tie!");
+          }
+          break;
+        case QUIT: // print final strings and exit if user wants to quit
+          result = " have forefeited against ";
+          break;
+          // no break statement here because program is done
+        default: // handle invalid input and re-itera
+          System.out.println("Invalid input, please try again!");
+          break;
+      }
+      // check conditions for victory (either player gets 3 wins or forfeit)
+      if (result == " have forefeited against ") {
+        stillPlaying = false;
+      } else if (wins == 3) {
+        result = " are victorious against ";
+        stillPlaying = false;
+      } else if (losses == 3) {
+        result = " have been defeated by";
+        stillPlaying = false;
       }
     }
 
-    if ()
-    System.out.println("");
+    System.out.println("You" + result + "the computer!");
     System.out.println("Thanks for playing! See you next time!");
   }
 }
