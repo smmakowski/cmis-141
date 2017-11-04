@@ -1,14 +1,15 @@
 /*
-* File: RockPaperScissors.java
+* File: RockPaperScissorsBuggy.java
 * Author: Stephen Makowski
 * Date: November 5, 2017
 * Purpose: This program is a command line Rock Paper Scissors game that uses
-  loops, conditionals, and switch statements. This is a functioning version
+  loops, conditionals, and switch statements. This is the buggy version.
+  There are
 */
 import java.util.Scanner;
 import java.util.Random;
 
-public class RockPaperScissors {
+public class RockPaperScissorsBuggy {
   public static void main(String[] args) {
     // declare/assign choice constants
     final String ROCK = "R";
@@ -36,7 +37,7 @@ public class RockPaperScissors {
     while (stillPlaying) {
       //prompt user for choice
       System.out.println("*******************");
-      if (wins == 2 && losses == 2) {
+      if (wins == 2 & losses == 2) {
         System.out.println("You both have 2 wins! This is the TIE-BREAKER!!!");
       }
       System.out.println("What is your choice for this round (Enter 'R' for Rock, 'P' for Paper, 'S' for Scissors, or 'Q' to forfeit and quit the game')?");
@@ -45,12 +46,12 @@ public class RockPaperScissors {
       randomIdx = rand.nextInt(3);
       compChoice = OPTIONS[randomIdx];
       // use switch to determine winner and increment score
-      switch (userChoice) {
+      switch () {
         case ROCK: // handle possibilities for each option
           if (compChoice == SCISSORS) { // increment wins if won
             System.out.println("You chose ROCK and Computer chose SCISSORS. You Wins!");
             wins++;
-          } else if (compChoice ==  PAPER) { // increment losses if loses
+          } else if (compChoice == PAPER) { // increment losses if loses
             System.out.println("You chose ROCK and Computer chose PAPER. Computer Wins!");
             losses++;
           } else { // do nothing if tie
@@ -59,7 +60,7 @@ public class RockPaperScissors {
           }
           break;
         case SCISSORS:
-          if (compChoice == PAPER) { // increment wins if won
+          if (compChoice == PAPER { // increment wins if won
             System.out.println("You chose SCISSORS and Computer chose PAPER. You Wins!");
             wins++;
           } else if (compChoice ==  ROCK) { // increment losses if loses
@@ -71,10 +72,10 @@ public class RockPaperScissors {
           }
           break;
         case PAPER:
-          if (compChoice == ROCK) { // increment wins if won
+          if (compChoice = ROCK) { // increment wins if won
             System.out.println("You chose PAPER and Computer chose ROCK. You win!");
             wins++;
-          } else if (compChoice ==  SCISSORS) { // increment losses if loses
+          } else if (compChoice == SCISSORS) { // increment losses if loses
             System.out.println("You chose PAPER and Computer chose SCISSORS. Computer wins!");
             losses++;
           } else { // do nothing if tie
@@ -104,6 +105,6 @@ public class RockPaperScissors {
     System.out.println("*******************");
     System.out.println("You" + result + "the computer!");
     System.out.println("Final results... You: " + wins + ", Computer: " + losses + ", Ties:" + ties + ".");
-    System.out.println("Thanks for playing! See you next time!");
+    System.out.println("Thanks for playing! See you next time!")
   }
 }
