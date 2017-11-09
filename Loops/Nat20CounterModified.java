@@ -69,6 +69,12 @@ public class Nat20CounterModified {
 				} else { // tails success
 					System.out.println("It took " + counter + " flips to get Tails.");
 				}
+				System.out.println("   __________");
+				System.out.println(" /            \\");
+				System.out.println("|              |");
+				System.out.println("|       $      |");
+				System.out.println("|              |");
+				System.out.println(" \\____________/");
 				flag = false;
 			} else if (currentRandValue == target) { // if success and fdie print success
 				System.out.println("It took " + counter + " rolls to get a " + target + ".");
