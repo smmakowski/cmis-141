@@ -49,6 +49,7 @@ public class Nat20CounterModified {
 
 		// flip or roll while target has not been reached
 		while (flag) {
+			counter++;
 			// roll/flip the dice or coin
 			currentRandValue = roll.nextInt(sides) + 1;
 			// if coin print flip related notification
@@ -64,9 +65,9 @@ public class Nat20CounterModified {
 			// if target is reached and flipping coin, print success
 			if (currentRandValue == target && sides == 2) {
 				if (target  == 1) { // heads success
-					System.out.println("It took " + counter + "flips to get Heads.");
+					System.out.println("It took " + counter + " flips to get Heads.");
 				} else { // tails success
-					System.out.println("It took " + counter + "flips to get Tails.");
+					System.out.println("It took " + counter + " flips to get Tails.");
 				}
 				flag = false;
 			} else if (currentRandValue == target) { // if success and fdie print success
@@ -79,9 +80,8 @@ public class Nat20CounterModified {
 				System.out.println(" \\()/   ()  / ");
 				System.out.println("  \\/_____()/");
 				flag = false; //Terminate loop
-			} else {
-				counter++; //One-up counter if rolls does not meet
-			} //End else
+			}
+			// remove counter++ and move to before check to avoid 0 rool situations
 		} //End while
 	} //End main
 } //End class
