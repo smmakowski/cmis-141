@@ -13,19 +13,55 @@ public class Loops {
     // intialize grid
     String[][] grid = {{" ", " ", " "}, {" ", " ", " "}, {" ",
        " ", " "}};
+    final String[] coin = {"Heads", "Tails"};
+    Scanner scan = new Scanner(System.in);
+    Random rand = new Random();
     // initialize players and tracker variales
     String players[] = {"Computer", "Player", "No one"};
     String winner = "";
+    int coinToss = rand.nextInt(2);
+    int playerCoinChoice = 0;
+    boolean playerFirst = false;
     int result = 3;
-    System.out.println("Let's play Tic Tac Toe with the computer!");
-    printGrid(grid);
-    System.out.println("This computer isn't very smart, it'll just choose any open space at random.");
-    System.out.println("So to be nice, we'll allow it to go first. Good luck!");
 
+    System.out.println("Let's play Tic Tac Toe with the computer!");
+    // prompt user for name
+    System.out.println("What is your name?");
+    players[1] = scan.nextLine();
+
+    // flip a coin using random to select who goes fist
+    System.out.println("Let's flip a coin to see who goes first.");
+    // prompt user for coin
+    while (true) {
+      System.out.println("Which side would you like to be (1 for heads, 2 for tails)?");
+      playerCoinChoice = scan.nextInt();
+      if (playerCoinChoice == 1 || playerCoinChoice == 2) {
+        break;
+      } else {
+        System.out.println("Invalid choice! Please select one of the correct options.");
+      }
+    }
+
+    // compare coint toss and decide winner
+    System.out.println("You have selected " + coin[playerCoinChoice - 1] + ".");
+    System.out.println("The coin is " + coin[coinToss]);
+    if (coinToss == playerCoinChoice - 1) {
+      System.out.println("You have won the toss! You will go first.");
+      playerFirst = true;
+    } else {
+      System.out.println("You have lost the toss! The Computer will go first.");
+    }
+    //print empty grid to start
+    printGrid(grid);
     // enter main game loop
     while (true) {
       // let computer go
-      moveComputer(grid);
+      if (playerFirst) {
+        movePlayer(grid);
+      } else {
+        moveComputer(grid);
+      }
+
 
       result = checkWinner(grid);
       // if there is an endgame outcome
@@ -36,7 +72,11 @@ public class Loops {
       }
 
       // player takes turn
-      movePlayer(grid);
+      if (playerFirst) {
+        moveComputer(grid);
+      } else {
+        movePlayer(grid);
+      }
 
       // check to see outcome of round
       result = checkWinner(grid);
