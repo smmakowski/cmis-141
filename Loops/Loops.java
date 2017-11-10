@@ -14,8 +14,7 @@ public class Loops {
     String[][] grid = {{" ", " ", " "}, {" ", " ", " "}, {" ",
        " ", " "}};
     // initialize players and tracker variales
-    String players[] = {"Player", "Computer", "No One"};
-    boolean gameInProgress = true;
+    String players[] = {"Computer", "Player", "No one"};
     String winner = "";
     int result = 3;
     System.out.println("Let's play Tic Tac Toe with the computer!");
@@ -24,10 +23,19 @@ public class Loops {
     System.out.println("So to be nice, we'll allow it to go first. Good luck!");
 
     // enter main game loop
-    while (gameInProgress) {
+    while (true) {
       // let computer go
       moveComputer(grid);
-      // player takes turn h
+
+      result = checkWinner(grid);
+      // if there is an endgame outcome
+      if (result < 3) {
+        // assign winner string and end main game loop
+        winner = players[result];
+        break;
+      }
+
+      // player takes turn
       movePlayer(grid);
 
       // check to see outcome of round
@@ -36,7 +44,7 @@ public class Loops {
       if (result < 3) {
         // assign winner string and end main game loop
         winner = players[result];
-        gameInProgress = false;
+        break;
       }
       // if no victory continue main loop
     }
@@ -44,6 +52,7 @@ public class Loops {
     System.out.println(winner + " has won the game!");
     System.out.println("Thanks for playing! Bye!");
   }
+
   public static void movePlayer(String[][] grid) {
     Scanner scan = new Scanner(System.in);
     boolean lookingForSpot = true;
