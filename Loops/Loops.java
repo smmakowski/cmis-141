@@ -5,12 +5,62 @@
   * Purpose: A game of tic tc toe that uses loops to deterimine if game is
   * being played and to check the grid for a winner
 */
+import java.util.Random;
+
 public class Loops {
   public static void main(String[] args) {
     // tic tac toe
     String[][] grid = {{" ", " ", " "}, {" ", " ", " "}, {" ",
        " ", " "}};
+    String players[] = {"", "Computer"};
+    boolean gameInProgress = true;
+    String winner;
+    System.out.println("Let's play Tic Tac Toe with the computer!");
+    System.out.println("This computer isn't very smart, it'll just choose any open space at random.");
+    System.out.println("So to be nice, we'll allow it to go first. Good luck!");
+
     printGrid(grid);
+    movecomputer(grid);
+    printGrid(grid);
+
+
+    // while (gameInProgress) {
+    //   // let computer go
+    //
+    //   // player takes turn h
+    //
+    //   // if victory is achieved
+    //   if (checkWinner() < 3) {
+    //
+    //     gameInProgress = false;
+    //   }
+    //     // assign winner String
+    //     // end game
+    //   // reset player and computer ability to play
+    // }
+  }
+
+  public static void movecomputer(String[][]grid) {
+    Random rand = new Random();
+    boolean lookingForSpot = true;
+    int row;
+    int col;
+    // while looking for spot
+    while (lookingForSpot){
+      //generate reandom row and column
+      row = rand.nextInt(3);
+      col = rand.nextInt(3);
+
+      // if spot is emtpy assign and end loop
+      if ((grid[row][col]).equals(" ")) {
+        grid[row][col] = "X";
+        lookingForSpot = false;
+      }
+    }
+  }
+
+  public static int checkWinner(String[][] grid) {
+    return 2;
   }
 
   public static void printGrid(String[][] grid) {
