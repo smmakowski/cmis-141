@@ -10,12 +10,14 @@ import java.util.Scanner;
 
 public class Loops {
   public static void main(String[] args) {
-    // tic tac toe
+    // intialize grid
     String[][] grid = {{" ", " ", " "}, {" ", " ", " "}, {" ",
        " ", " "}};
-    String players[] = {"", "Computer"};
+    // initialize players and tracker variales
+    String players[] = {"Player", "Computer", "No One"};
     boolean gameInProgress = true;
-    String winner;
+    String winner = "";
+    int result = 3;
     System.out.println("Let's play Tic Tac Toe with the computer!");
     printGrid(grid);
     System.out.println("This computer isn't very smart, it'll just choose any open space at random.");
@@ -25,27 +27,31 @@ public class Loops {
     while (gameInProgress) {
       // let computer go
       moveComputer(grid);
-
       // player takes turn h
       movePlayer(grid);
 
-      // if victory is achieved
-      if (checkWinner(grid) < 3) {
-        // assign winner string;
-        // end game main loop
+      // check to see outcome of round
+      result = checkWinner(grid);
+      // if there is an endgame outcome
+      if (result < 3) {
+        // assign winner string and end main game loop
+        winner = players[result];
         gameInProgress = false;
       }
-        // assign winner String
-        // end game
-      // reset player and computer ability to play
+      // if no victory continue main loop
     }
+    // print post game strings and exit
+    System.out.println(winner + " has won the game!");
+    System.out.println("Thanks for playing! Bye!");
   }
   public static void movePlayer(String[][] grid) {
     Scanner scan = new Scanner(System.in);
     boolean lookingForSpot = true;
     int row = 0;
     int col = 0;
+    // allow player to look for spot
     while (lookingForSpot) {
+      // prompt user for spot while proper input has not been achieved
       while (row < 1 || row > 3) {
         System.out.println("Please enter the row you like to select (1, 2, or 3):");
         row = scan.nextInt();
@@ -53,6 +59,7 @@ public class Loops {
           System.out.println("Row number out of range!");
         }
       }
+      // prompt user for
       while (col < 1 || col > 3) {
         System.out.println("Please enter the column you like to select (1, 2, or 3):");
         col = scan.nextInt();
@@ -60,19 +67,21 @@ public class Loops {
           System.out.println("Column number out of range!");
         }
       }
-
-      if ((grid[row][col]).equals(" ")) {
-        grid[row][col] = "O";
+      // check to see if slot on grid has been taken
+      if ((grid[row - 1][col - 1]).equals(" ")) {
+        grid[row - 1][col - 1] = "O";
         System.out.println("You have moved to row " +  (row + 1) + " column " + (col + 1) + ".");
         printGrid(grid);
         lookingForSpot = false;
       } else {
         System.out.println("The spot you attempted to select has already been taken! Please try again!");
+        row = 0;
+        col = 0;
       }
     }
   }
   public static void moveComputer(String[][]grid) {
-    // setup
+    // setup required object instances and tracker variabels
     Random rand = new Random();
     boolean lookingForSpot = true;
     int row;
@@ -96,6 +105,43 @@ public class Loops {
   }
 
   public static int checkWinner(String[][] grid) {
+    // iterate through all the rows to check for an X or O victory
+    final String[] players = {"X", "O"};
+
+    // iterate through both players
+    for (int i = 0; i < players.length; i++) {
+      // iterate through each row to check horizontal vicory for playr[i]
+      for (int j = 0; j < grid.length; j++) {
+        // if all in row are equal return i (index of player in player array)
+        if ((grid[j][0]).equals(players[i]) && (grid[j][1]).equals(players[i]) && (grid[j][2]).equals(players[i])) {
+          return i;
+        }
+      }
+      // iterate through each column to check vertical victory
+      for (int k = 0; k < grid.length; k++) {
+        if ((grid[0][k]).equals(players[i]) && (grid[1][k]).equals(players[i]) && (grid[2][k]).equals(players[i])) {
+          return i;
+        }
+      }
+
+      // check diagonal victories
+      if ((grid[0][0]).equals(players[i]) && (grid[1][1]).equals(players[i]) && (grid[2][2]).equals(players[i])) {
+        return i;
+      }
+      if ((grid[0][2]).equals(players[i]) && (grid[1][1]).equals(players[i]) && (grid[2][0]).equals(players[i])) {
+        return i;
+      }
+    }
+    // iterate through all rows to see if all slots filled
+    for (int l = 0; l < grid.length; l++) {
+      for (int m = 0; m < grid.length; m++) {
+        // if current spot is empty return outcome 3 (no victory or tie)
+        if ((grid[l][m]).equals(" ")) {
+          return 3;
+        }
+      }
+    }
+    // if all slots are filled return outcome 2 (tie)
     return 2;
   }
 
