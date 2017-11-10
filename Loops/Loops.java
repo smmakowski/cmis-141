@@ -48,11 +48,12 @@ public class Loops {
     if (coinToss == playerCoinChoice - 1) {
       System.out.println("You have won the toss! You will go first.");
       playerFirst = true;
+      //print empty grid to start
+      printGrid(grid);
     } else {
       System.out.println("You have lost the toss! The Computer will go first.");
     }
-    //print empty grid to start
-    printGrid(grid);
+
     // enter main game loop
     while (true) {
       // let computer go
