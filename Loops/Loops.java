@@ -6,6 +6,7 @@
   * being played and to check the grid for a winner
 */
 import java.util.Random;
+import java.util.Scanner;
 
 public class Loops {
   public static void main(String[] args) {
@@ -16,36 +17,68 @@ public class Loops {
     boolean gameInProgress = true;
     String winner;
     System.out.println("Let's play Tic Tac Toe with the computer!");
+    printGrid(grid);
     System.out.println("This computer isn't very smart, it'll just choose any open space at random.");
     System.out.println("So to be nice, we'll allow it to go first. Good luck!");
 
-    printGrid(grid);
-    movecomputer(grid);
-    printGrid(grid);
+    // enter main game loop
+    while (gameInProgress) {
+      // let computer go
+      moveComputer(grid);
 
+      // player takes turn h
+      movePlayer(grid);
 
-    // while (gameInProgress) {
-    //   // let computer go
-    //
-    //   // player takes turn h
-    //
-    //   // if victory is achieved
-    //   if (checkWinner() < 3) {
-    //
-    //     gameInProgress = false;
-    //   }
-    //     // assign winner String
-    //     // end game
-    //   // reset player and computer ability to play
-    // }
+      // if victory is achieved
+      if (checkWinner(grid) < 3) {
+        // assign winner string;
+        // end game main loop
+        gameInProgress = false;
+      }
+        // assign winner String
+        // end game
+      // reset player and computer ability to play
+    }
   }
+  public static void movePlayer(String[][] grid) {
+    Scanner scan = new Scanner(System.in);
+    boolean lookingForSpot = true;
+    int row = 0;
+    int col = 0;
+    while (lookingForSpot) {
+      while (row < 1 || row > 3) {
+        System.out.println("Please enter the row you like to select (1, 2, or 3):");
+        row = scan.nextInt();
+        if (row < 1 || row > 3) {
+          System.out.println("Row number out of range!");
+        }
+      }
+      while (col < 1 || col > 3) {
+        System.out.println("Please enter the column you like to select (1, 2, or 3):");
+        col = scan.nextInt();
+        if (col < 1 && col > 3) {
+          System.out.println("Column number out of range!");
+        }
+      }
 
-  public static void movecomputer(String[][]grid) {
+      if ((grid[row][col]).equals(" ")) {
+        grid[row][col] = "O";
+        System.out.println("You have moved to row " +  (row + 1) + " column " + (col + 1) + ".");
+        printGrid(grid);
+        lookingForSpot = false;
+      } else {
+        System.out.println("The spot you attempted to select has already been taken! Please try again!");
+      }
+    }
+  }
+  public static void moveComputer(String[][]grid) {
+    // setup
     Random rand = new Random();
     boolean lookingForSpot = true;
     int row;
     int col;
     // while looking for spot
+    System.out.println("It is now the computers turn!");
     while (lookingForSpot){
       //generate reandom row and column
       row = rand.nextInt(3);
@@ -54,8 +87,11 @@ public class Loops {
       // if spot is emtpy assign and end loop
       if ((grid[row][col]).equals(" ")) {
         grid[row][col] = "X";
+        System.out.println("The computer has moved to row " +  (row + 1) + " column " + (col + 1) + ".");
+        printGrid(grid);
         lookingForSpot = false;
       }
+      //otherqise continue
     }
   }
 
