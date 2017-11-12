@@ -113,7 +113,7 @@ public class Loops {
       while (col < 1 || col > 3) {
         System.out.println("Please enter the column you like to select (1, 2, or 3):");
         col = scan.nextInt();
-        if (col < 1 && col > 3) {
+        if (col < 1 || col > 3) {
           System.out.println("Column number out of range!");
         }
       }
