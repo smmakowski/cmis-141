@@ -2,16 +2,27 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Pokemon {
-  String name;
-  String type;
+  // public variables
+  public String name;
+  public String type;
+  public int level;
   int hp;
-  int level;
+  int attack;
+  int defense;
+  int sAttack;
+  int sDefense;
+  int speed;
 
-  public Pokemon(String n, String t, int h, int l) {
-    name = n;
-    type = t;
+  public Pokemon(String n, String t, int l, int h, int a, int d, int sA, int sD, int s) {
+    this.name = n;
+    this.type = t;
+    this.level = l;
     hp = h;
-    level = l;
+    attack = a;
+    defense = d;
+    sAttack = sA;
+    sDefense = sD;
+    speed = s;
   }
   // public void setNickname(String name) {
   //   Scanner scan = new Scanner(System.in);
@@ -33,6 +44,6 @@ public class Pokemon {
   //
   // }
   public void call() {
-    System.out.println(name + "-" + name + "!!!");
+    System.out.println(this.name + "-" + name + "!!!");
   }
 }
