@@ -6,23 +6,27 @@ public class Pokemon {
   public String name;
   public String type;
   public int level;
+  int maxHp;
   int hp;
   int attack;
   int defense;
   int sAttack;
   int sDefense;
   int speed;
+  Moves[] moves;
 
-  public Pokemon(String n, String t, int l, int h, int a, int d, int sA, int sD, int s) {
+  public Pokemon(String n, String t, int l, int h, int a, int d, int sA, int sD, int s, Moves m1, Moves m2, Moves m3, Moves m4) {
     this.name = n;
     this.type = t;
     this.level = l;
-    hp = h;
+    maxHp = h;
+    hp = maxHp;
     attack = a;
     defense = d;
     sAttack = sA;
     sDefense = sD;
     speed = s;
+    moves = new Moves[] {m1, m2, m3, m4};
   }
   public void setNickname() {
     Scanner scan = new Scanner(System.in);
@@ -43,7 +47,6 @@ public class Pokemon {
       }
     }  
     
-
     while (pickingName) {
       System.out.println("What nickname would you like to give a nickname to " + name + "?");
       nickname = scan.next();
@@ -66,7 +69,26 @@ public class Pokemon {
     }
   }
 
+  public void printMoves() {
+    System.out.println("Here are your moves");
+    for (int i = 0; i < moves.length; i++) {
+      if (moves[i] != null) {
+        System.out.println(moves[i].name + " ( " + moves[i].pp + " / " + moves[i].maxPp + " )");
+      }
+    }
+  }
+
   public void call() {
     System.out.println(this.name + "-" + name + "!!!");
   }
+
+  public void takeDamage(int damage) {
+    if (damage >= this.hp) {
+      this.hp = 0;
+      System.out.println(this.name + " have died");
+    } else {
+      this.hp -= damage;
+    }
+  }
+
 }
