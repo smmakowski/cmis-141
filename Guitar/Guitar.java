@@ -14,36 +14,46 @@ public class Guitar {
     guitarColor = Color.red;
   }
 
-  public getNumStrings() {
+  public int getNumStrings() {
     return numStrings;
   }
 
-  public getGuitarLength() {
+  public double getGuitarLength() {
     return guitarLength;
   }
 
-  public getGuitarManufacturer() {
+  public String getGuitarManufacturer() {
     return guitarManufacturer;
   }
 
-  public getGuitarColor() {
+  public Color getGuitarColor() {
     return guitarColor;
   }
 
-  public playGuitar() {
+  public String playGuitar() {
     Random rand = new Random();
-    final char[] tone = {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
-    final String[] time = {".25", ".5", "1", "2", "4"};
-    String[] notes
-    String notes = "[";
+    final String[] TONES = {"A", "B", "C", "D", "E", "F", "G"};
+    final String[] TIMES = {".25", ".5", "1", "2", "4"};
+    String[] randomSequence = new String[16];
+    String notes = "";
+    int randomTone;
+    int randomTime;
 
-    notes.concat("]");
+    for (int i = 0; i < randomSequence.length; i++) {
+      randomTone = rand.nextInt();
+      randomTime = rand.nextInt();
+      randomSequence[i] = TONES[randomTone].concat("(").concat(TIMES[randomTime]).concat(")");
+    }
+    notes += "[" + String.join(", ", notes)+ "]";
 
+    System.out.println(notes);
+    return notes;
   }
 
-  public toString() {
-    System.out.println("(numStrings=" + numStrings + ", Length=" + guitarLength +
-    ", manufacturer=" + guitarManufacturer + ", color=" + guitarColor + ")");
+  public String toString() {
+    String toString ="(numStrings=" + numStrings + ", Length=" + guitarLength +
+    ", manufacturer=" + guitarManufacturer + ", color=" + guitarColor + ")";
+    return toString;
   }
 
 }
