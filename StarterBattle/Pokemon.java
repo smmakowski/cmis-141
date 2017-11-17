@@ -3,16 +3,16 @@ import java.util.Random;
 
 public class Pokemon {
   // public fields
-  String name;
-  String type;
-  int level;
-  int maxHp;
-  int hp;
-  int attack;
-  int defense;
-  int sAttack;
-  int sDefense;
-  int speed;
+  private String name;
+  private String type;
+  private int level;
+  private int maxHp;
+  private int hp;
+  private int attack;
+  private int defense;
+  private int sAttack;
+  private int sDefense;
+  private int speed;
   Moves[] moves;
 
   // constructor
@@ -29,7 +29,44 @@ public class Pokemon {
     speed = s;
     moves = new Moves[] {m1, m2, m3, m4};
   }
-  // method to set nickname for pokemon 
+
+  public String getName() {
+    return this.name;
+  }
+
+  public int getLevel() {
+    return this.level;
+  }
+
+  public int getHp() {
+    return this.hp;
+  }
+
+  public int getMaxHp() {
+    return this.maxHp;
+  }
+
+  public String getType() {
+    return this.type;
+  }
+
+  public int getSpeed() {
+    return this.speed;
+  }
+
+  public int getAttack() {
+    return this.attack;
+  }
+
+  public int getDefense() {
+    return this.defense;
+  }
+
+  public Moves[] getMoves() {
+    return this.moves;
+  }
+  
+  // method to set nickname for pokemon
   public void setNickname() {
     Scanner scan = new Scanner(System.in);
     String nickname = name;
@@ -40,7 +77,7 @@ public class Pokemon {
       System.out.println("");
       System.out.println("Would you like to give " + this.name + " a nickname ('y' for yes 'n' for no, non case-sensitive)?");
       choice = scan.next().toLowerCase();
-      // give user option to continue 
+      // give user option to continue
       if (choice.equals("y")) {
         break;
       } else if (choice.equals("n")) {
@@ -50,7 +87,7 @@ public class Pokemon {
       } else {
         System.out.println("Invalid input! Please try again!");
       }
-    }  
+    }
     // loop to enter nickname
     while (pickingName) {
       System.out.println("");
@@ -83,7 +120,7 @@ public class Pokemon {
     // iterate through Moves array
     for (int i = 0; i < moves.length; i++) {
       if (moves[i] != null) { // if there is a move in array index print
-        System.out.println("\t" + "(" + (i + 1) + ") " + moves[i].name + " ( " + moves[i].pp + " / " + moves[i].maxPp + " )");
+        System.out.println("\t" + "(" + (i + 1) + ") " + moves[i].getName() + " ( " + moves[i].getPp() + " / " + moves[i].getMaxPp() + " )");
       }
     }
   }
@@ -107,7 +144,7 @@ public class Pokemon {
     }
   }
 
-  // mehtod to heal pokemon 
+  // mehtod to heal pokemon
   public void heal() {
     hp += 10;
     if (hp > maxHp) {
@@ -138,7 +175,7 @@ public class Pokemon {
   public int hasMove(String move) {
     //iterate through array
     for (int i = 0; i < moves.length; i++) {
-      if (moves [i] != null && moves[i].name.equals(move.toUpperCase())) {
+      if (moves [i] != null && moves[i].getName().equals(move.toUpperCase())) {
         return i; // if move is fount return index
       }
     }

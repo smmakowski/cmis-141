@@ -3,14 +3,14 @@ import java.util.Random;
 
 public class PokemonBattle {
   // potions inventory
-  static int yourPotions;
-  static int rivalPotions;
+  private static int yourPotions;
+  private static int rivalPotions;
 
   public static void main(String[] args) {
     // instantiate scann/ random objects
     Scanner scan = new Scanner(System.in);
     Random rand = new Random();
-    
+
     // game states
     boolean choosingPokemon = true;
     String pick = "";
@@ -25,7 +25,7 @@ public class PokemonBattle {
     int choices = 0;
     int randInt = 0;
     int turn = 1;
-    
+
     yourPotions = 3;
     rivalPotions = 3;
 
@@ -56,15 +56,15 @@ public class PokemonBattle {
     System.out.println("           \\    \\ `.__,'|  |`-._    `|      |__| \\/ |  `.__,'|  | |   |");
     System.out.println("            \\_.-'       |__|    `-._ |              '-.|     '-.| |   |");
     System.out.println("                                    `'                            '-._|");
-    
-    System.out.print("NARRATOR: It's a sunny day in Pallet Town, and today is the day you get to go pick your first Pokemon! You forgot to set your alarm and wake up 4"); 
+
+    System.out.print("NARRATOR: It's a sunny day in Pallet Town, and today is the day you get to go pick your first Pokemon! You forgot to set your alarm and wake up 4");
     System.out.print(" hours late.  You run over to the professor's lab as fast as you can!\n");
     System.out.println("");
 
     System.out.println("PROFESSOR: Welcome to my lab! I see you're here about the ad I put up for human test subjects!");
     System.out.println("PROFESSOR: No? oh you must be here to pick your Pokemon, then! Why didn't you say so?");
-    
-    // prompt user for name 
+
+    // prompt user for name
     System.out.println("PROFESSOR: Oops, I didn't catch your name! What was it again (Please enter name)?");
     yourName = scan.next().toUpperCase();
     System.out.println("PROFESSOR: " + yourName + " is it? Well nice to meet you!");
@@ -87,7 +87,7 @@ public class PokemonBattle {
     while (choosingPokemon) {
         // if more than 3 invlaid choices, pokemon is chosen using random number
         if (choices == 3) {
-            System.out.println("");    
+            System.out.println("");
             System.out.println("PROFESSOR: Okay! Let's not be indecisive here... I'll pick one for you!");
             System.out.println(rivalName + ": Yeah, Brah! we ain't got all day!");
             randInt = rand.nextInt(3) + 1;
@@ -102,7 +102,7 @@ public class PokemonBattle {
                     pick ="squirtle";
                     break;
                 default:
-                    // do nothing 
+                    // do nothing
                     break;
             }
         }  else { // prompt user for choice
@@ -137,11 +137,11 @@ public class PokemonBattle {
 
     // set nickname in Pokemon class print pre batter
     System.out.println("");
-    System.out.println("You have chosen " + yourPokemon.name + ", the " + yourPokemon.type + " Pokemon.");
+    System.out.println("You have chosen " + yourPokemon.getName() + ", the " + yourPokemon.getType() + " Pokemon.");
     yourPokemon.setNickname();
 
     System.out.println("");
-    System.out.println(rivalName + ": Fine Noob, I'll take " + rivalPokemon.name + "! It's a " + rivalPokemon.type +
+    System.out.println(rivalName + ": Fine Noob, I'll take " + rivalPokemon.getName() + "! It's a " + rivalPokemon.getType() +
     " type, so it's better anyway!");
     System.out.println(rivalName + ": Hey I have an idea! Let's battle!");
 
@@ -165,13 +165,13 @@ public class PokemonBattle {
     }
     System.out.println("");
     System.out.println("IT'S BATTLE TIME!!!");
-    // determine who does first using speed 
-    if (yourPokemon.speed > rivalPokemon.speed) {
+    // determine who does first using speed
+    if (yourPokemon.getSpeed() > rivalPokemon.getSpeed()) {
         firstToGo = true;
-        System.out.println("Your " + yourPokemon.name + " Is faster! You'll go first!");
+        System.out.println("Your " + yourPokemon.getName() + " Is faster! You'll go first!");
         yourPokemon.call();
     } else {
-        System.out.println(rivalName +"'s " + yourPokemon.name + " Is faster! You'll go second!");
+        System.out.println(rivalName +"'s " + yourPokemon.getName() + " Is faster! You'll go second!");
     }
 
     // Enter battle Loop
@@ -179,7 +179,7 @@ public class PokemonBattle {
         // print turn header
         System.out.println("");
         System.out.println("***************** TURN " +  turn + " *****************");
-        
+
         // take turns based on speed
         if (firstToGo) {
             userTurn(yourPokemon, rivalPokemon);
@@ -220,7 +220,7 @@ public class PokemonBattle {
     } else {
         System.out.println("***********************************************************");
         System.out.println("");
-        System.out.println(rivalName + " has won!");                                 
+        System.out.println(rivalName + " has won!");
         System.out.println("");
         System.out.println(rivalName + ": See! I knew I was the best! Perhaps another time!");
     }
@@ -237,11 +237,11 @@ public class PokemonBattle {
 
   public static int checkVictory(Pokemon player, Pokemon rival) {
     // check hp values using conditional chain 0 = tie 1 = player winner; 2 == comp winner 3 == continue
-    if (player.hp == 0 && rival.hp == 0) {
+    if (player.getHp() == 0 && rival.getHp() == 0) {
         return 0;
-    } else if (rival.hp == 0) {
+    } else if (rival.getHp() == 0) {
         return 1;
-    } else if (player.hp == 0) {
+    } else if (player.getHp() == 0) {
         return 2;
     } else {
         return 3;
@@ -255,13 +255,13 @@ public class PokemonBattle {
     // print turn headers and available moves
     System.out.println("");
     System.out.println("< YOUR TURN >");
-    System.out.println(yourPokemon.name + "'S HP: " + yourPokemon.hp +" | " + rivalPokemon.name + "'S HP: " + rivalPokemon.hp);
+    System.out.println(yourPokemon.getName() + "'S HP: " + yourPokemon.getHp() +" | " + rivalPokemon.getName() + "'S HP: " + rivalPokemon.getHp());
     System.out.println("");
     yourPokemon.printMoves();
     System.out.println("\t(ITEM) POTION ( " + yourPotions + " )");
     //prompt user for move choice
     System.out.println("Enter a move (Be careful, while your pokemon is not case-sensitive, it is word sensitive, and will not be able to do actions it doesn't understand!)");
-    move = scan.nextLine(); 
+    move = scan.nextLine();
     System.out.println("");
     // handle potion choice
     if (move.toUpperCase().equals("POTION")) {
@@ -272,16 +272,16 @@ public class PokemonBattle {
         } else {
             System.out.println("You do not have any POTIONS!");
         }
-        
+
     } else { // check for move availability
         int selected = yourPokemon.hasMove(move); // checks for move using cusotm indexOf mehtod
         if (selected != -1) { // if move is availale run move
-            System.out.println(yourPokemon.name + " tries to use " + yourPokemon.moves[selected].name);
+            System.out.println(yourPokemon.getName() + " tries to use " + yourPokemon.moves[selected].getName());
             yourPokemon.moves[selected].makeMove(yourPokemon, rivalPokemon);
         } else { // else pokemon loses turn
-            System.out.println("You tell " + yourPokemon.name + " to use " + move.toUpperCase() + ".");
-            System.out.println(yourPokemon.name + " cannot understand you! It sits there looking confused...");
-        }  
+            System.out.println("You tell " + yourPokemon.getName() + " to use " + move.toUpperCase() + ".");
+            System.out.println(yourPokemon.getName() + " cannot understand you! It sits there looking confused...");
+        }
     }
   }
 
@@ -289,20 +289,21 @@ public class PokemonBattle {
     //generate random number for move
     Random rand = new Random();
     int action = rand.nextInt(4);
-    //pritn headers 
+    //pritn headers
     System.out.println("");
     System.out.println("< " + rivalName + "'S TURN >");
-    System.out.println(yourPokemon.name + "'S HP: " + yourPokemon.hp +" | " + rivalPokemon.name + "'S HP: " + rivalPokemon.hp);
+    System.out.println(yourPokemon.getName() + "'S HP: " + yourPokemon.getHp() + " / " + yourPokemon.getMaxHp() + " | " + rivalPokemon.getName() + "'S HP: " + rivalPokemon.getHp()+ " / " + rivalPokemon.getMaxHp());
+
     System.out.println("");
     // conditionls based on move choice
     if (action < 2) { // if move is available (hardcoded since starters only have 2 moves)
-        System.out.println(rivalPokemon.name + " tries to " + rivalPokemon.moves[action].name);
+        System.out.println(rivalPokemon.getName() + " tries to " + rivalPokemon.moves[action].getName());
         rivalPokemon.moves[action].makeMove(rivalPokemon, yourPokemon);
         // calcul
     } else if (action == 2) { // if pokemon doesnt understand move generate random string for display
         String randString = generateRandomString();
-        System.out.println(rivalName + " tries to tell " + rivalPokemon.name + " to use " + randString + ".");
-        System.out.println(rivalPokemon.name + " sits there looking confused");
+        System.out.println(rivalName + " tries to tell " + rivalPokemon.getName() + " to use " + randString + ".");
+        System.out.println(rivalPokemon.getName() + " sits there looking confused");
     } else if (action == 3) { // use potion
         if (rivalPotions > 0) {
             rivalPokemon.heal();
@@ -328,4 +329,4 @@ public class PokemonBattle {
 
     return randString;
   }
-}  
+}

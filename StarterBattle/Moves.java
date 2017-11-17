@@ -2,14 +2,14 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Moves {
-  String name;
-  int power;
-  double accuracy;
-  int maxPp;
-  int pp;
-  String type;
-  String category;
-  String status;
+  private String name;
+  private int power;
+  private double accuracy;
+  private int maxPp;
+  private int pp;
+  private String type;
+  private String category;
+  private String status;
 
   public Moves(String n, int p, double a, int mP, String t, String c, String s) {
     this.name = n.toUpperCase();
@@ -21,8 +21,18 @@ public class Moves {
     category = c.toUpperCase();
     status = s.toUpperCase();
   }
+  // get methods for
+  public String getName() {
+    return this.name;
+  }
 
+  public int getPp() {
+    return this.pp;
+  }
 
+  public int getMaxPp() {
+    return this.maxPp;
+  }
   public void makeMove(Pokemon attacker, Pokemon defender) {
     if (this.category.equals("PHYSICAL")) {
       this.makeNormalMove(attacker, defender);
@@ -38,7 +48,7 @@ public class Moves {
     // check pp levels
     if (this.pp > 0) {
       // check to see if attack lands
-      if (hitChance <= accuracy) {
+      if (hitChance <= this.accuracy) {
         damage = calculateDamage(attacker, defender);
         defender.takeDamage(damage);
       } else {
@@ -46,7 +56,7 @@ public class Moves {
       }
       // decrement pp if possible
       if (this.pp > 0) {
-        pp--;
+        this.pp--;
       }
     } else {
       System.out.println("You do not have to pp for this move!");
@@ -60,13 +70,13 @@ public class Moves {
     // check pp levels
     if (this.pp > 0) {
       // check to see if attack lands
-      if (hitChance <= accuracy) { // if it lands
+      if (hitChance <= this.accuracy) { // if it lands
         defender.debuffStatus(this.status);
       } else {
         System.out.println("The attack fails!");
       }
       // decrement pp after usage
-        pp--;
+        this.pp--;
     } else {
       System.out.println("You do not have to pp for this move!");
     }
@@ -74,8 +84,8 @@ public class Moves {
 
   public int calculateDamage(Pokemon attacker, Pokemon defender) {
     Random rand = new Random();
-    int randomMod = rand.nextInt(attacker.level);
-    double damage = (((((2.0 * attacker.level) / 5.0) + 2.0) * this.power * (attacker.attack / defender.defense)) / 50.0) + 2.0;
+    int randomMod = rand.nextInt(attacker.getLevel());
+    double damage = (((((2.0 * attacker.getLevel()) / 5.0) + 2.0) * this.power * (attacker.getAttack() / defender.getDefense())) / 50.0) + 2.0;
     if (isCritical()) {
       System.out.println("It's a critical hit!");
       damage = damage * 2.0;
