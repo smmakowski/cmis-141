@@ -84,32 +84,52 @@ public class PokemonBattle {
     }
 
     // Enter battle Loop
-    while (inBattle) {
+    while (true) {
         if (firstToGo) {
-            //check for victory 
             userTurn(yourPokemon, rivalPokemon);
-            victor = checkVictory(yourPokemon, rivalPokemon);
-            if (victor < 3) {
-                inBattle = false;
-            }
-
-            rivalTurn(yourPokemon, rivalPokemon, rivalName);
-            if (victor < 3) {
-                inBattle = false;
-            }
         } else {
             rivalTurn(yourPokemon, rivalPokemon, rivalName);
-            victor = checkVictory(yourPokemon, rivalPokemon);
-            if (victor < 3) {
-                inBattle = false;
-            }
-            
-            userTurn(yourPokemon, rivalPokemon);
-            if (victor < 3) {
-                inBattle = false;
-            }
         }
-        
+
+        victor = checkVictory(yourPokemon, rivalPokemon);
+        if (victor < 3) {
+            break;
+        }
+
+        if (firstToGo) {
+            rivalTurn(yourPokemon, rivalPokemon, rivalName);
+        } else {
+            userTurn(yourPokemon, rivalPokemon);
+        }
+
+        victor = checkVictory(yourPokemon, rivalPokemon);
+        if (victor < 3) {
+            break;
+        }
+        // if (firstToGo) {
+        //     //check for victory 
+        //     userTurn(yourPokemon, rivalPokemon);
+        //     victor = checkVictory(yourPokemon, rivalPokemon);
+        //     if (victor < 3) {
+        //         break;
+        //     }
+
+        //     rivalTurn(yourPokemon, rivalPokemon, rivalName);
+        //     if (victor < 3) {
+        //        break;
+        //     }
+        // } else {
+        //     rivalTurn(yourPokemon, rivalPokemon, rivalName);
+        //     victor = checkVictory(yourPokemon, rivalPokemon);
+        //     if (victor < 3) {
+        //         break;
+        //     }
+            
+        //     userTurn(yourPokemon, rivalPokemon);
+        //     if (victor < 3) {
+        //         break;
+        //     }
+        // } 
     }
     // print victory dependent dialogue;
     if (victor == 0) {
@@ -147,6 +167,7 @@ public class PokemonBattle {
     // prompt for attack while attack not chosen
     Scanner scan = new Scanner(System.in);
     String move = "";
+    System.out.println("");
     System.out.println("***** " + yourPokemon.name + " ***** HP: " + yourPokemon.hp +" *****" + rivalPokemon.name + " ***** HP: " + rivalPokemon.hp +" *****");
     System.out.println("What would you like " + yourPokemon.name +" to do (Please enter the attack from below; not case-sensitive)?");
     yourPokemon.printMoves();
