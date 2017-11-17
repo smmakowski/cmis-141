@@ -2,6 +2,10 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class PokemonBattle {
+  // potions inventory
+  static int yourPotions;
+  static int rivalPotions;
+
   public static void main(String[] args) {
     // instantiate scann/ random objects
     Scanner scan = new Scanner(System.in);
@@ -21,9 +25,9 @@ public class PokemonBattle {
     int choices = 0;
     int randInt = 0;
     int turn = 1;
-    // potions inventory
-    int yourPotions = 0;
-    int rivalPotions = 0;
+    
+    yourPotions = 3;
+    rivalPotions = 3;
 
     // instantiate starter moves
     Moves tackle = new Moves("Tackle", 50, 1.0, 35, "Normal", "Physical", "");
@@ -254,14 +258,21 @@ public class PokemonBattle {
     System.out.println(yourPokemon.name + "'S HP: " + yourPokemon.hp +" | " + rivalPokemon.name + "'S HP: " + rivalPokemon.hp);
     System.out.println("");
     yourPokemon.printMoves();
-    System.out.println("\t(ITEM) POTION (//add functionality later)");
+    System.out.println("\t(ITEM) POTION ( " + yourPotions + " )");
     //prompt user for move choice
     System.out.println("Enter a move (Be careful, while your pokemon is not case-sensitive, it is word sensitive, and will not be able to do actions it doesn't understand!)");
     move = scan.nextLine(); 
     System.out.println("");
     // handle potion choice
     if (move.toUpperCase().equals("POTION")) {
-        yourPokemon.heal();
+        // check potion availability and if availble use
+        if (yourPotions > 0) {
+            yourPokemon.heal();
+            yourPotions--;
+        } else {
+            System.out.println("You do not have any POTIONS!");
+        }
+        
     } else { // check for move availability
         int selected = yourPokemon.hasMove(move); // checks for move using cusotm indexOf mehtod
         if (selected != -1) { // if move is availale run move
@@ -293,8 +304,12 @@ public class PokemonBattle {
         System.out.println(rivalName + " tries to tell " + rivalPokemon.name + " to use " + randString + ".");
         System.out.println(rivalPokemon.name + " sits there looking confused");
     } else if (action == 3) { // use potion
-        System.out.println(rivalName + " uses a POTION!");
-        rivalPokemon.heal();
+        if (rivalPotions > 0) {
+            rivalPokemon.heal();
+            rivalPotions--;
+        } else {
+            System.out.println(rivalName + " does not have any POTIONS!");
+        }
     }
   }
 
