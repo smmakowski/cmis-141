@@ -49,7 +49,7 @@ public class Pokemon {
     
     while (pickingName) {
       System.out.println("What nickname would you like to give a nickname to " + name + "?");
-      nickname = scan.next();
+      nickname = scan.next().toUpperCase();
       System.out.println("You have chosen the nickname \"" + nickname + ".");
 
       while (true) {
