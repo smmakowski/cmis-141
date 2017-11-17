@@ -1,11 +1,21 @@
 public class Player {
-	String name;
-	Pokemon pokemon;
-	int potions;
-	
+	private String name;
+	private int potions;
+
 	public Player() {
 		name = "";
-		pokemon = null;
-		potions = 0;
+		potions = 3;
+	}
+
+	public void  setName(String name) {
+		this.name = name;
+	}
+
+	public void  getPotions() {
+		return this.potions;
+	}
+
+	public void usePotion() {
+		this.potions--;
 	}
 }
