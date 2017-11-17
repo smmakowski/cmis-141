@@ -3,9 +3,9 @@ import java.util.Random;
 
 public class Pokemon {
   // public variables
-  public String name;
-  public String type;
-  public int level;
+  String name;
+  String type;
+  int level;
   int maxHp;
   int hp;
   int attack;
@@ -70,10 +70,10 @@ public class Pokemon {
   }
 
   public void printMoves() {
-    System.out.println("Your " + this.name + " can do the following moves!:");
+    System.out.println("Your " + this.name + " can do the following moves:");
     for (int i = 0; i < moves.length; i++) {
       if (moves[i] != null) {
-        System.out.println(moves[i].name + " ( " + moves[i].pp + " / " + moves[i].maxPp + " )");
+        System.out.println("\t" + "(" + (i + 1) + ") " + moves[i].name + " ( " + moves[i].pp + " / " + moves[i].maxPp + " )");
       }
     }
   }
@@ -84,15 +84,24 @@ public class Pokemon {
 
   public void takeDamage(int damage) {
     if (damage > 0) {
-      System.out.println(this.name + " takes" + damage + " damage!");
+      System.out.println(this.name + " takes " + damage + " damage!");
     }
-    
+
     if (damage >= this.hp) {
       this.hp = 0;
       System.out.println(this.name + " has fainted!");
     } else {
       this.hp -= damage;
     }
+  }
+
+  public void heal() {
+    hp += 10;
+    if (hp > maxHp) {
+      hp = maxHp;
+    }
+
+    System.out.println(this.name + "is healed for 10hp!");
   }
 
   public int hasMove(String move) {

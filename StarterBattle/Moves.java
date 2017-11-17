@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Moves {
-  public String name;
+  String name;
   int power;
   double accuracy;
   int maxPp;
