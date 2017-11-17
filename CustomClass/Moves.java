@@ -1,16 +1,7 @@
-/**
-  * File: Moves.java
-  * Author: Stephen Makowski
-  * Date: November 17, 2017
-  * Purpose: The Pokemon class. This class allow for the construction of Move
-  * instances and includes methods related to the class for setting and getting fields, as well as
-  * making calculations for damage
-*/
 import java.util.Scanner;
 import java.util.Random;
 
 public class Moves {
-  // private fields
   private String name;
   private int power;
   private double accuracy;
@@ -20,7 +11,6 @@ public class Moves {
   private String category;
   private String status;
 
-  // constructor
   public Moves(String n, int p, double a, int mP, String t, String c, String s) {
     this.name = n.toUpperCase();
     power = p;
@@ -31,7 +21,7 @@ public class Moves {
     category = c.toUpperCase();
     status = s.toUpperCase();
   }
-  // get methods for class
+  // get methods for
   public String getName() {
     return this.name;
   }
@@ -43,7 +33,6 @@ public class Moves {
   public int getMaxPp() {
     return this.maxPp;
   }
-  //method that calls either normal or status move depenign on move category
   public void makeMove(Pokemon attacker, Pokemon defender) {
     if (this.category.equals("PHYSICAL")) {
       this.makeNormalMove(attacker, defender);
@@ -92,7 +81,7 @@ public class Moves {
       System.out.println("You do not have to pp for this move!");
     }
   }
-  // method that uses random number generators and calculations; accpets pokemon instances as args
+
   public int calculateDamage(Pokemon attacker, Pokemon defender) {
     Random rand = new Random();
     int randomMod = rand.nextInt(attacker.getLevel());
@@ -105,9 +94,13 @@ public class Moves {
     damage += randomMod;
     return (int)damage;
   }
-  // method that generates randon number to check if crtical hit
+
   public boolean isCritical() {
     Random rand = new Random();
     return rand.nextBoolean();
+  }
+
+  public void makeSpecialMove() {
+
   }
 }

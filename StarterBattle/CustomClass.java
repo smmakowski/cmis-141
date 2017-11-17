@@ -1,11 +1,15 @@
+/**
+  * File: CustomClass.java
+  * Author: Stephen Makowski
+  * Date: November 17, 2017
+  * Purpose: A re-creation of the first rival battle in the pokemon red/blue game.
+  * that uses the following custom classes: Pokemon, Player, and Moves. This File
+  * is the main game loop.
+*/
 import java.util.Scanner;
 import java.util.Random;
 
-public class PokemonBattle {
-  // potions inventory
-  private static int yourPotions;
-  private static int rivalPotions;
-
+public class CustomClass {
   public static void main(String[] args) {
     // instantiate scann/ random objects
     Scanner scan = new Scanner(System.in);
@@ -23,9 +27,6 @@ public class PokemonBattle {
     int choices = 0;
     int randInt = 0;
     int turn = 1;
-
-    yourPotions = 3;
-    rivalPotions = 3;
 
     //instantiate players
     Player user = new Player();

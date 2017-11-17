@@ -1,11 +1,3 @@
-/**
-  * File: Pokemon.java
-  * Author: Stephen Makowski
-  * Date: November 17, 2017
-  * Purpose: The Pokemon class. This class allow for the construction of POKEMON
-  * instances and includes methods for setting and getting fields, as well as
-  * making calculations and checking for availability of certain properties
-*/
 import java.util.Scanner;
 import java.util.Random;
 
@@ -37,7 +29,7 @@ public class Pokemon {
     speed = s;
     moves = new Moves[] {m1, m2, m3, m4};
   }
-  // get methods for class filds
+
   public String getName() {
     return this.name;
   }
@@ -161,10 +153,9 @@ public class Pokemon {
     System.out.println(this.name + " used a POTION!");
     System.out.println(this.name + " is healed for 10hp!");
   }
-  //
+
   public void debuffStatus(String status) {
     int mod;
-    // depending on status affected differnt paths are taken
     switch (status) {
       case "ATTACK":
         mod = this.attack / 10;
