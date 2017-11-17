@@ -70,7 +70,7 @@ public class Pokemon {
   }
 
   public void printMoves() {
-    System.out.println("Here are your moves");
+    System.out.println("Your " + this.name + " can do the following moves!:");
     for (int i = 0; i < moves.length; i++) {
       if (moves[i] != null) {
         System.out.println(moves[i].name + " ( " + moves[i].pp + " / " + moves[i].maxPp + " )");
@@ -83,12 +83,24 @@ public class Pokemon {
   }
 
   public void takeDamage(int damage) {
+    if (damage > 0) {
+      System.out.println(this.name + " takes" + damage + " damage!");
+    }
+    
     if (damage >= this.hp) {
       this.hp = 0;
-      System.out.println(this.name + " have died");
+      System.out.println(this.name + " has fainted!");
     } else {
       this.hp -= damage;
     }
   }
 
+  public int hasMove(String move) {
+    for (int i = 0; i < moves.length; i++) {
+      if (moves [i] != null && moves[i].name.equals(move.toUpperCase())) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }

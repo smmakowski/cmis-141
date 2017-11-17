@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class PokemonBattle {
   public static void main(String[] args) {
@@ -18,7 +19,7 @@ public class PokemonBattle {
     Moves tackle = new Moves("Tackle", 50, 1.0, 35, "Normal", "Physical");
     Moves growl = new Moves("Growl", 0, 1.0, 40, "Normal", "Status");
     Moves scratch = new Moves("Scratch", 40, 1.0, 40, "Normal", "Status");
-    Moves tailWhip = new Moves("tailWhip", 0, 1.0, 30, "Normal", "Status");
+    Moves tailWhip = new Moves("Tail Whip", 0, 1.0, 30, "Normal", "Status");
 
     Pokemon bulbasaur = new Pokemon("BULBASAUR", "Grass", 5, 45, 49, 49, 65, 65, 45, tackle, growl, null, null);
     Pokemon charmander = new Pokemon("CHARMANDER", "Fire", 5, 39, 52, 43, 60, 50, 65, scratch, growl, null, null);
@@ -82,23 +83,35 @@ public class PokemonBattle {
         System.out.println(rivalName +"'s " + yourPokemon.name + " Is faster! You'll go second!");
     }
 
-    // begin inBattletle
+    // Enter battle Loop
     while (inBattle) {
-        // if (firstToGo) {
-        //     yourPokemon
-        // } else {
+        if (firstToGo) {
+            //check for victory 
+            userTurn(yourPokemon, rivalPokemon);
+            victor = checkVictory(yourPokemon, rivalPokemon);
+            if (victor < 3) {
+                inBattle = false;
+            }
 
-        // }
-
-        rivalPokemon.takeDamage(100);
-        // test victory 
-        victor = checkVictory(yourPokemon, rivalPokemon);
-        if (victor < 3) {
-            inBattle = false;
+            rivalTurn(yourPokemon, rivalPokemon, rivalName);
+            if (victor < 3) {
+                inBattle = false;
+            }
+        } else {
+            rivalTurn(yourPokemon, rivalPokemon, rivalName);
+            victor = checkVictory(yourPokemon, rivalPokemon);
+            if (victor < 3) {
+                inBattle = false;
+            }
+            
+            userTurn(yourPokemon, rivalPokemon);
+            if (victor < 3) {
+                inBattle = false;
+            }
         }
+        
     }
     // print victory dependent dialogue;
-
     if (victor == 0) {
         System.out.println("Both your pokemon have been knocked out!");
         System.out.println(rivalName + ": gg, brah! Did not expect that to happen at... all!");
@@ -118,16 +131,68 @@ public class PokemonBattle {
     System.out.println("PROFESSOR: Thanks for playing though! BYE!");
   }
 
-  public static int checkVictory(Pokemon a, Pokemon b) {
-    if (a.hp == 0 && b.hp == 0) {
+  public static int checkVictory(Pokemon player, Pokemon rival) {
+    if (player.hp == 0 && rival.hp == 0) {
         return 0;
-    } else if (b.hp == 0) {
+    } else if (rival.hp == 0) {
         return 1;
-    } else if (a.hp == 0) {
+    } else if (player.hp == 0) {
         return 2;
     } else {
         return 3;
     }
   }
 
-}
+  public static void userTurn(Pokemon yourPokemon, Pokemon rivalPokemon) {
+    // prompt for attack while attack not chosen
+    Scanner scan = new Scanner(System.in);
+    String move = "";
+    System.out.println("***** " + yourPokemon.name + " ***** HP: " + yourPokemon.hp +" *****" + rivalPokemon.name + " ***** HP: " + rivalPokemon.hp +" *****");
+    System.out.println("What would you like " + yourPokemon.name +" to do (Please enter the attack from below; not case-sensitive)?");
+    yourPokemon.printMoves();
+    System.out.println("Potion (//add functionality later)");
+    System.out.println("Be careful, while your pokemon is not case-sensitive, it is word sensitive, and will not be able to complete actions it doesn't know!");
+    move = scan.next();    
+    int selected = yourPokemon.hasMove(move);
+    if (selected != -1) {
+        System.out.println(yourPokemon.name + " tries to use " + yourPokemon.moves[selected].name);
+        yourPokemon.moves[selected].makeNormalMove(yourPokemon, rivalPokemon);
+    } else {
+        System.out.println("You tell " + yourPokemon.name + " to use " + move.toUpperCase() + ".");
+        System.out.println(yourPokemon.name + " cannot understand you! It sits there looking confused...");
+    }
+  }
+
+  public static void rivalTurn(Pokemon yourPokemon, Pokemon rivalPokemon, String rivalName) {
+    Random rand = new Random();
+    int action = rand.nextInt(4);
+    System.out.println("");
+    if (action < 2) {
+        System.out.println(rivalPokemon.name + " tries to " + rivalPokemon.moves[action].name);
+        rivalPokemon.moves[action].makeNormalMove(rivalPokemon, yourPokemon);
+        // calcul
+    } else if (action == 2) {
+        String randString = generateRandomString();
+        System.out.println(rivalName + " tries to tell " + rivalPokemon.name + " to use " + randString + ".");
+        System.out.println(rivalPokemon.name + " sits there looking confused");
+    } else if (action == 3) {
+        System.out.println(rivalName + " uses a potion!");
+    }
+  }
+
+  public static String generateRandomString() {
+    Random rand = new Random();
+    int len = rand.nextInt(9);
+    int ascii = 0;
+    String randString = "";
+    String randChar = "";
+
+    for (int i = 0; i < len; i++) {
+        ascii = rand.nextInt(255);
+        randChar = Character.toString((char)ascii);
+        randString += randChar;
+    }
+
+    return randString;
+  }
+}  
