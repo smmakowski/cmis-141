@@ -184,9 +184,9 @@ public class PokemonBattle {
 
         // take turns based on speed
         if (firstToGo) {
-            userTurn(yourPokemon, rivalPokemon);
+            userTurn(yourPokemon, rivalPokemon, user);
         } else {
-            rivalTurn(yourPokemon, rivalPokemon, rival.getName());
+            rivalTurn(yourPokemon, rivalPokemon, rival);
         }
         // check for victor after each turn
         victor = checkVictory(yourPokemon, rivalPokemon);
@@ -195,9 +195,9 @@ public class PokemonBattle {
         }
 
         if (firstToGo) {
-            rivalTurn(yourPokemon, rivalPokemon, rival.getName());
+            rivalTurn(yourPokemon, rivalPokemon, rival);
         } else {
-            userTurn(yourPokemon, rivalPokemon);
+            userTurn(yourPokemon, rivalPokemon, user);
         }
 
         victor = checkVictory(yourPokemon, rivalPokemon);
@@ -237,30 +237,31 @@ public class PokemonBattle {
     System.out.println("~~~~~ END ~~~~~");
   }
 
-  public static int checkVictory(Pokemon player, Pokemon rival) {
+  public static int checkVictory(Pokemon yourPokemon, Pokemon rivalPokemon) {
     // check hp values using conditional chain 0 = tie 1 = player winner; 2 == comp winner 3 == continue
-    if (player.getHp() == 0 && rival.getHp() == 0) {
+    if (yourPokemon.getHp() == 0 && rivalPokemon.getHp() == 0) {
         return 0;
-    } else if (rival.getHp() == 0) {
+    } else if (rivalPokemon.getHp() == 0) {
         return 1;
-    } else if (player.getHp() == 0) {
+    } else if (yourPokemon.getHp() == 0) {
         return 2;
     } else {
         return 3;
     }
   }
 
-  public static void userTurn(Pokemon yourPokemon, Pokemon rivalPokemon) {
+  public static void userTurn(Pokemon yourPokemon, Pokemon rivalPokemon, Player user) {
     // prompt for attack while attack not chosen
     Scanner scan = new Scanner(System.in);
     String move = "";
     // print turn headers and available moves
     System.out.println("");
     System.out.println("< YOUR TURN >");
-    System.out.println(yourPokemon.getName() + "'S HP: " + yourPokemon.getHp() +" | " + rivalPokemon.getName() + "'S HP: " + rivalPokemon.getHp());
+    System.out.println(yourPokemon.getName() + "'S HP: " + yourPokemon.getHp() + " / " + yourPokemon.getMaxHp() +
+    " | " + rivalPokemon.getName() + "'S HP: " + rivalPokemon.getHp()+ " / " + rivalPokemon.getMaxHp());
     System.out.println("");
     yourPokemon.printMoves();
-    System.out.println("\t(ITEM) POTION ( " + yourPotions + " )");
+    System.out.println("\t(ITEM) POTION ( " + user.getPotions() + " )");
     //prompt user for move choice
     System.out.println("Enter a move (Be careful, while your pokemon is not case-sensitive, it is word sensitive, and will not be able to do actions it doesn't understand!)");
     move = scan.nextLine();
@@ -268,9 +269,9 @@ public class PokemonBattle {
     // handle potion choice
     if (move.toUpperCase().equals("POTION")) {
         // check potion availability and if availble use
-        if (yourPotions > 0) {
+        if (user.getPotions() > 0) {
             yourPokemon.heal();
-            yourPotions--;
+            user.usePotion();
         } else {
             System.out.println("You do not have any POTIONS!");
         }
@@ -287,15 +288,15 @@ public class PokemonBattle {
     }
   }
 
-  public static void rivalTurn(Pokemon yourPokemon, Pokemon rivalPokemon, String rivalName) {
+  public static void rivalTurn(Pokemon yourPokemon, Pokemon rivalPokemon, Player rival) {
     //generate random number for move
     Random rand = new Random();
     int action = rand.nextInt(4);
     //pritn headers
     System.out.println("");
-    System.out.println("< " + rivalName + "'S TURN >");
-    System.out.println(yourPokemon.getName() + "'S HP: " + yourPokemon.getHp() + " / " + yourPokemon.getMaxHp() + " | " + rivalPokemon.getName() + "'S HP: " + rivalPokemon.getHp()+ " / " + rivalPokemon.getMaxHp());
-
+    System.out.println("< " + rival.getName() + "'S TURN >");
+    System.out.println(yourPokemon.getName() + "'S HP: " + yourPokemon.getHp() + " / " + yourPokemon.getMaxHp() +
+    " | " + rivalPokemon.getName() + "'S HP: " + rivalPokemon.getHp()+ " / " + rivalPokemon.getMaxHp());
     System.out.println("");
     // conditionls based on move choice
     if (action < 2) { // if move is available (hardcoded since starters only have 2 moves)
@@ -304,14 +305,14 @@ public class PokemonBattle {
         // calcul
     } else if (action == 2) { // if pokemon doesnt understand move generate random string for display
         String randString = generateRandomString();
-        System.out.println(rivalName + " tries to tell " + rivalPokemon.getName() + " to use " + randString + ".");
+        System.out.println(rival.getName() + " tries to tell " + rivalPokemon.getName() + " to use " + randString + ".");
         System.out.println(rivalPokemon.getName() + " sits there looking confused");
     } else if (action == 3) { // use potion
-        if (rivalPotions > 0) {
+        if (rival.getPotions() > 0) {
             rivalPokemon.heal();
-            rivalPotions--;
+            rival.usePotion();
         } else {
-            System.out.println(rivalName + " does not have any POTIONS!");
+            System.out.println(rival.getName() + " does not have any POTIONS!");
         }
     }
   }
