@@ -3,10 +3,12 @@ import java.util.Random;
 
 public class PokemonBattle {
   public static void main(String[] args) {
+    // instantiate scann/ random objects
     Scanner scan = new Scanner(System.in);
     Random rand = new Random();
-    boolean choosingPokemon = true;
     
+    // game states
+    boolean choosingPokemon = true;
     String pick = "";
     String conf = "";
     String yourName = "";
@@ -19,6 +21,9 @@ public class PokemonBattle {
     int choices = 0;
     int randInt = 0;
     int turn = 1;
+    // potions inventory
+    int yourPotions = 0;
+    int rivalPotions = 0;
 
     // instantiate starter moves
     Moves tackle = new Moves("Tackle", 50, 1.0, 35, "Normal", "Physical", "");
@@ -33,7 +38,23 @@ public class PokemonBattle {
 
 
     // Print opening lines and dialogue
-    System.out.println("NARRATOR: asdflj adfas kj l;akj dfkj l;kj ;lkj ;lkj ;kj ;kj dfsa");
+    // Logo taken from https://www.ascii-code.com/ascii-art/video-games/pokemon.php
+    // warning: logos do not contain backslashes for escape characters tehy need to be added!
+    System.out.println("                                          ,'\\");
+    System.out.println("        _.----.        ____         ,'  _\\   ___    ___     ____");
+    System.out.println("    _,-'       `.     |    |  /`.   \\,-'    |   \\  /   |   |    \\  |`.");
+    System.out.println("    \\      __    \\    '-.  | /   `.  ___    |    \\/    |   '-.   \\ |  |");
+    System.out.println("     \\.    \\ \\   |  __  |  |/    ,','_  `.  |          | __  |    \\|  |");
+    System.out.println("       \\    \\/   /,' _`.|      ,' / / / /   |          ,' _`.|     |  |");
+    System.out.println("        \\     ,-'/  /   \\    ,'   | \\/ / ,`.|         /  /   \\  |     |");
+    System.out.println("         \\    \\ |   \\_/  |   `-.  \\    `'  /|  |    ||   \\_/  | |\\    |");
+    System.out.println("          \\    \\ \\      /       `-.`.___,-' |  |\\  /| \\      /  | |   |");
+    System.out.println("           \\    \\ `.__,'|  |`-._    `|      |__| \\/ |  `.__,'|  | |   |");
+    System.out.println("            \\_.-'       |__|    `-._ |              '-.|     '-.| |   |");
+    System.out.println("                                    `'                            '-._|");
+    
+    System.out.print("NARRATOR: It's a sunny day in Pallet Town, and today is the day you get to go pick your first Pokemon! You forgot to set your alarm and wake up 4"); 
+    System.out.print(" hours late.  You run over to the professor's lab as fast as you can!\n");
     System.out.println("");
 
     System.out.println("PROFESSOR: Welcome to my lab! I see you're here about the ad I put up for human test subjects!");
@@ -111,16 +132,35 @@ public class PokemonBattle {
     }
 
     // set nickname in Pokemon class print pre batter
+    System.out.println("");
     System.out.println("You have chosen " + yourPokemon.name + ", the " + yourPokemon.type + " Pokemon.");
     yourPokemon.setNickname();
 
-    System.out.println(rivalName + ": Fine Noob, I'll take " + rivalPokemon.name + "! It's a " + rivalPokemon.type +
-    " , so it's better anyway!");
-
-    System.out.println(rivalName + ": Hey I have an idea! Let's battle!");
-    System.out.println("IT'S BATTLE TIME");
     System.out.println("");
+    System.out.println(rivalName + ": Fine Noob, I'll take " + rivalPokemon.name + "! It's a " + rivalPokemon.type +
+    " type, so it's better anyway!");
+    System.out.println(rivalName + ": Hey I have an idea! Let's battle!");
 
+    while (true) {
+        System.out.println("");
+        System.out.println("Ready to battle ('y' for 'n' for no)?");
+        System.out.println("(If you hit no, the program will end)");
+        conf = scan.next();
+
+        if (conf.equals("y")) {
+            break;
+        } else if (conf.equals("n")) {
+            System.out.println("");
+            System.out.println(yourName + ": Nah, I'm good!");
+            System.out.println("NARRATOR: Realizing that Pokemon isn't for you, you place the pokeball down and go home.");
+            System.out.println("~~~~~ END ~~~~~");
+            System.exit(0);
+        } else {
+            System.out.println("Please enter a valid response");
+        }
+    }
+    System.out.println("");
+    System.out.println("IT'S BATTLE TIME!!!");
     // determine who does first using speed 
     if (yourPokemon.speed > rivalPokemon.speed) {
         firstToGo = true;
@@ -164,22 +204,30 @@ public class PokemonBattle {
     System.out.println("");
     // print victory dependent dialogue;
     if (victor == 0) {
+        System.out.println("***********************************************************");
+        System.out.println("");
         System.out.println("Both your pokemon have been knocked out!");
         System.out.println(rivalName + ": gg, brah! Did not expect that to happen at... all!");
     } else if (victor == 1) {
+        System.out.println("***********************************************************");
+        System.out.println("");
         System.out.println("You win!");
         System.out.println(rivalName + ": Hmmm... You just got lucky... I'm still the best...");
     } else {
-        System.out.println(rivalName + " has won!");
+        System.out.println("***********************************************************");
+        System.out.println("");
+        System.out.println(rivalName + " has won!");                                 
+        System.out.println("");
         System.out.println(rivalName + ": See! I knew I was the best! Perhaps another time!");
     }
-
+    System.out.println("");
     // print closing text/
     System.out.println("PROFESSOR: Well, that was an interesting battle!");
     System.out.println("PROFESSOR: It's time for you to venture out! A world of excitement awaits!");
     System.out.println("PROFESSOR: ... ... ...");
     System.out.println("PROFESSOR: Well maybe not, this is the only part of the game that's available for now... Oops!");
     System.out.println("PROFESSOR: Thanks for playing though! BYE!");
+    System.out.println("");
     System.out.println("~~~~~ END ~~~~~");
   }
 
@@ -206,7 +254,7 @@ public class PokemonBattle {
     System.out.println(yourPokemon.name + "'S HP: " + yourPokemon.hp +" | " + rivalPokemon.name + "'S HP: " + rivalPokemon.hp);
     System.out.println("");
     yourPokemon.printMoves();
-    System.out.println("\tPotion (//add functionality later)");
+    System.out.println("\t(ITEM) POTION (//add functionality later)");
     //prompt user for move choice
     System.out.println("Enter a move (Be careful, while your pokemon is not case-sensitive, it is word sensitive, and will not be able to do actions it doesn't understand!)");
     move = scan.nextLine(); 

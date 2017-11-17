@@ -17,8 +17,8 @@ public class Pokemon {
 
   // constructor
   public Pokemon(String n, String t, int l, int h, int a, int d, int sA, int sD, int s, Moves m1, Moves m2, Moves m3, Moves m4) {
-    this.name = n;
-    this.type = t;
+    this.name = n.toUpperCase();
+    this.type = t.toUpperCase();
     this.level = l;
     maxHp = h;
     hp = maxHp;
@@ -37,12 +37,14 @@ public class Pokemon {
     boolean pickingName = true;
     // ask user if you would like to give anickname
     while (true) {
+      System.out.println("");
       System.out.println("Would you like to give " + this.name + " a nickname ('y' for yes 'n' for no, non case-sensitive)?");
       choice = scan.next().toLowerCase();
       // give user option to continue 
       if (choice.equals("y")) {
         break;
       } else if (choice.equals("n")) {
+        System.out.println("");
         System.out.println("Okay then! The default name is cool too...");
         return; // exit funtion if no desire to enter nickname
       } else {
@@ -51,16 +53,20 @@ public class Pokemon {
     }  
     // loop to enter nickname
     while (pickingName) {
+      System.out.println("");
       System.out.println("What nickname would you like to give a nickname to " + name + "?");
       nickname = scan.next().toUpperCase();
+       System.out.println("");
       System.out.println("You have chosen the nickname \"" + nickname + ".");
       // loop to confirm choice
       while (true) {
-        System.out.println("Are you sure? This is literally the only part of the game where we'll try to confirm your choice!");
+        System.out.println("Are you sure you like that name? This is literally the only part of the game where we'll try to confirm your choice!");
         System.out.println("Enter 'Yes' to confirm or 'No' to change name (Answer is not case-sensitive):");
         choice = scan.next().toLowerCase();
         if (choice.equals("yes")) {
           this.name = nickname;
+          System.out.println("");
+          System.out.println("Name change successful!");
           pickingName = false;
           break;
         } else if (choice.equals("no")) {
@@ -108,7 +114,7 @@ public class Pokemon {
       hp = maxHp;
     }
     System.out.println(this.name + " used a POTION!");
-    System.out.println(this.name + "is healed for 10hp!");
+    System.out.println(this.name + " is healed for 10hp!");
   }
 
   public void debuffStatus(String status) {
@@ -116,13 +122,11 @@ public class Pokemon {
     switch (status) {
       case "ATTACK":
         mod = this.attack / 10;
-        System.out.println(mod);
         System.out.println(this.name + "'S ATTACK has been lowered!");
         this.attack -= mod;
         break;
       case "DEFENSE":
         mod = this.defense / 10;
-        System.out.println(mod);
         System.out.println(this.name + "'S DEFENSE has been lowered!");
         this.defense -= mod;
         break;
