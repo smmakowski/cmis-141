@@ -1,10 +1,12 @@
 public class Player {
 	private String name;
 	private int potions;
+	private Pokemon pokemon;
 
 	public Player() {
 		name = "";
 		potions = 3;
+		pokemon = null;
 	}
 
 	public void setName(String name) {

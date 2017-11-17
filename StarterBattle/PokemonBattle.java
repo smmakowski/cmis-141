@@ -278,8 +278,8 @@ public class PokemonBattle {
     } else { // check for move availability
         int selected = yourPokemon.hasMove(move); // checks for move using cusotm indexOf mehtod
         if (selected != -1) { // if move is availale run move
-            System.out.println(yourPokemon.getName() + " tries to use " + yourPokemon.moves[selected].getName());
-            yourPokemon.moves[selected].makeMove(yourPokemon, rivalPokemon);
+            System.out.println(yourPokemon.getName() + " tries to use " + yourPokemon.getMoves()[selected].getName());
+            yourPokemon.getMoves()[selected].makeMove(yourPokemon, rivalPokemon);
         } else { // else pokemon loses turn
             System.out.println("You tell " + yourPokemon.getName() + " to use " + move.toUpperCase() + ".");
             System.out.println(yourPokemon.getName() + " cannot understand you! It sits there looking confused...");
@@ -299,8 +299,8 @@ public class PokemonBattle {
     System.out.println("");
     // conditionls based on move choice
     if (action < 2) { // if move is available (hardcoded since starters only have 2 moves)
-        System.out.println(rivalPokemon.getName() + " tries to " + rivalPokemon.moves[action].getName());
-        rivalPokemon.moves[action].makeMove(rivalPokemon, yourPokemon);
+        System.out.println(rivalPokemon.getName() + " tries to " + rivalPokemon.getMoves()[action].getName());
+        rivalPokemon.getMoves()[action].makeMove(rivalPokemon, yourPokemon);
         // calcul
     } else if (action == 2) { // if pokemon doesnt understand move generate random string for display
         String randString = generateRandomString();

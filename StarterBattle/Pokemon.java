@@ -13,7 +13,7 @@ public class Pokemon {
   private int sAttack;
   private int sDefense;
   private int speed;
-  Moves[] moves;
+  private Moves[] moves;
 
   // constructor
   public Pokemon(String n, String t, int l, int h, int a, int d, int sA, int sD, int s, Moves m1, Moves m2, Moves m3, Moves m4) {
@@ -65,7 +65,7 @@ public class Pokemon {
   public Moves[] getMoves() {
     return this.moves;
   }
-  
+
   // method to set nickname for pokemon
   public void setNickname() {
     Scanner scan = new Scanner(System.in);
