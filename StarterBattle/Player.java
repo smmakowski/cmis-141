@@ -7,11 +7,15 @@ public class Player {
 		potions = 3;
 	}
 
-	public void  setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void  getPotions() {
+	public String getName() {
+		return this.name;
+	}
+
+	public int getPotions() {
 		return this.potions;
 	}
 

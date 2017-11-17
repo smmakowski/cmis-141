@@ -15,9 +15,7 @@ public class PokemonBattle {
     boolean choosingPokemon = true;
     String pick = "";
     String conf = "";
-    String yourName = "";
     Pokemon yourPokemon = null;
-    String rivalName = "";
     Pokemon rivalPokemon= null;
     boolean firstToGo = false;
     boolean inBattle = true;
@@ -28,6 +26,10 @@ public class PokemonBattle {
 
     yourPotions = 3;
     rivalPotions = 3;
+
+    //instantiate players
+    Player user = new Player();
+    Player rival = new Player();
 
     // instantiate starter moves
     Moves tackle = new Moves("Tackle", 50, 1.0, 35, "Normal", "Physical", "");
@@ -64,15 +66,15 @@ public class PokemonBattle {
     System.out.println("PROFESSOR: Welcome to my lab! I see you're here about the ad I put up for human test subjects!");
     System.out.println("PROFESSOR: No? oh you must be here to pick your Pokemon, then! Why didn't you say so?");
 
-    // prompt user for name
+    // prompt user for name, set with .setname(0 method)
     System.out.println("PROFESSOR: Oops, I didn't catch your name! What was it again (Please enter name)?");
-    yourName = scan.next().toUpperCase();
-    System.out.println("PROFESSOR: " + yourName + " is it? Well nice to meet you!");
+    user.setName(scan.next().toUpperCase());
+    System.out.println("PROFESSOR: " + user.getName() + " is it? Well nice to meet you!");
     System.out.println("");
     // prompt user for rival name
     System.out.println("PROFESSOR: Oh, and this is one of my kid relatives. He's looking to start his adventure too, maybe. I think his name is... (Please enter name):");
-    rivalName = scan.next().toUpperCase();
-    System.out.println(rivalName + ": That's right! my name is " + rivalName + ", and don't you forget it!");
+    rival.setName(scan.next().toUpperCase());
+    System.out.println(rival.getName() + ": That's right! my name is " + rival.getName() + ", and don't you forget it!");
 
     // prompt user for pokemon
     System.out.println("");
@@ -89,7 +91,7 @@ public class PokemonBattle {
         if (choices == 3) {
             System.out.println("");
             System.out.println("PROFESSOR: Okay! Let's not be indecisive here... I'll pick one for you!");
-            System.out.println(rivalName + ": Yeah, Brah! we ain't got all day!");
+            System.out.println(rival.getName() + ": Yeah, Brah! we ain't got all day!");
             randInt = rand.nextInt(3) + 1;
             switch (randInt) {
                 case 1:
@@ -141,9 +143,9 @@ public class PokemonBattle {
     yourPokemon.setNickname();
 
     System.out.println("");
-    System.out.println(rivalName + ": Fine Noob, I'll take " + rivalPokemon.getName() + "! It's a " + rivalPokemon.getType() +
+    System.out.println(rival.getName() + ": Fine Noob, I'll take " + rivalPokemon.getName() + "! It's a " + rivalPokemon.getType() +
     " type, so it's better anyway!");
-    System.out.println(rivalName + ": Hey I have an idea! Let's battle!");
+    System.out.println(rival.getName() + ": Hey I have an idea! Let's battle!");
 
     while (true) {
         System.out.println("");
@@ -155,7 +157,7 @@ public class PokemonBattle {
             break;
         } else if (conf.equals("n")) {
             System.out.println("");
-            System.out.println(yourName + ": Nah, I'm good!");
+            System.out.println(user.getName() + ": Nah, I'm good!");
             System.out.println("NARRATOR: Realizing that Pokemon isn't for you, you place the pokeball down and go home.");
             System.out.println("~~~~~ END ~~~~~");
             System.exit(0);
@@ -171,7 +173,7 @@ public class PokemonBattle {
         System.out.println("Your " + yourPokemon.getName() + " Is faster! You'll go first!");
         yourPokemon.call();
     } else {
-        System.out.println(rivalName +"'s " + yourPokemon.getName() + " Is faster! You'll go second!");
+        System.out.println(rival.getName() +"'s " + yourPokemon.getName() + " Is faster! You'll go second!");
     }
 
     // Enter battle Loop
@@ -184,7 +186,7 @@ public class PokemonBattle {
         if (firstToGo) {
             userTurn(yourPokemon, rivalPokemon);
         } else {
-            rivalTurn(yourPokemon, rivalPokemon, rivalName);
+            rivalTurn(yourPokemon, rivalPokemon, rival.getName());
         }
         // check for victor after each turn
         victor = checkVictory(yourPokemon, rivalPokemon);
@@ -193,7 +195,7 @@ public class PokemonBattle {
         }
 
         if (firstToGo) {
-            rivalTurn(yourPokemon, rivalPokemon, rivalName);
+            rivalTurn(yourPokemon, rivalPokemon, rival.getName());
         } else {
             userTurn(yourPokemon, rivalPokemon);
         }
@@ -211,18 +213,18 @@ public class PokemonBattle {
         System.out.println("***********************************************************");
         System.out.println("");
         System.out.println("Both your pokemon have been knocked out!");
-        System.out.println(rivalName + ": gg, brah! Did not expect that to happen at... all!");
+        System.out.println(rival.getName() + ": gg, brah! Did not expect that to happen at... all!");
     } else if (victor == 1) {
         System.out.println("***********************************************************");
         System.out.println("");
         System.out.println("You win!");
-        System.out.println(rivalName + ": Hmmm... You just got lucky... I'm still the best...");
+        System.out.println(rival.getName() + ": Hmmm... You just got lucky... I'm still the best...");
     } else {
         System.out.println("***********************************************************");
         System.out.println("");
-        System.out.println(rivalName + " has won!");
+        System.out.println(rival.getName() + " has won!");
         System.out.println("");
-        System.out.println(rivalName + ": See! I knew I was the best! Perhaps another time!");
+        System.out.println(rival.getName() + ": See! I knew I was the best! Perhaps another time!");
     }
     System.out.println("");
     // print closing text/
