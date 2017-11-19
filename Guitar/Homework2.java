@@ -1,3 +1,9 @@
+/**
+  * File: Homework2.java
+  * Author: Stephen Makowski
+  * Date: November 19, 2017
+  * Purpose: Program to instantiate and print return values for guitar class methods
+*/
 import java.awt.Color;
 
 public class Homework2 {

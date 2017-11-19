@@ -1,3 +1,9 @@
+/**
+  * File: GUitar.java
+  * Author: Stephen Makowski
+  * Date: November 19, 2017
+  * Purpose: Guitar class constructors and methods
+*/
 import java.awt.Color;
 import java.util.Random;
 
