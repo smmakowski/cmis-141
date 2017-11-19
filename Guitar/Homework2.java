@@ -1,9 +1,11 @@
+import java.awt.Color;
+
 public class Homework2 {
   public static void main (String[] args) {
     // instantiate guitars
     Guitar guitar1 = new Guitar();
-    Guitar guitar2 = new Guitar();
-    Guitar guitar3 = new Guitar();
+    Guitar guitar2 = new Guitar(6, 25.5, "Fender", Color.black);
+    Guitar guitar3 = new Guitar(6, 24.75, "Epiphone", Color.blue);
     // create an array of guitars that contains above instances
     Guitar[] guitars = new Guitar[]{guitar1, guitar2, guitar3};
     // iterate through Array and print return values for each methods for each Guitar

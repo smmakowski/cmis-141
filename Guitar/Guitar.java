@@ -15,6 +15,14 @@ public class Guitar {
     this.guitarManufacturer = "Gibson";
     this.guitarColor = Color.red;
   }
+
+  public Guitar(int strings, double length, String maker, Color color) {
+    this.numStrings = strings;
+    this.guitarLength = length;
+    this.guitarManufacturer = maker;
+    this.guitarColor = color;
+  }
+
   // get methods that return field values
   public int getNumStrings() {
     return this.numStrings;
