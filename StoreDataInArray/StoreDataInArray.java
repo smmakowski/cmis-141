@@ -18,27 +18,38 @@ public class StoreDataInArray {
   private static char[][] responses;
 
   public static void main(String[] args) throws InterruptedException {
-      System.out.println("Welcome to ___! This program is a command line version of the boardgame 'MASTERMIND'.");
+      Scanner scan = new Scanner(System.in);
+      String resp = "";
+
+      // print opening lines, and instructions
+      System.out.println("Welcome! This program is a command-line version of the boardgame 'MASTERMIND'.");
+      System.out.println("");
       System.out.println("********** INSTRUCTIONS **********");
       System.out.println("- In this game, the computer will come up with a '4 Letter Code' for you to guess.");
-      System.out.println("- Each letter in the code can be on of the following letters: A, B, C, D, E , or F.");
-      System.out.println(" - With each guess you make, the computer respond with 4 symbols.");
-      System.out.println("\t An 'X' means that one of the letters you chose is not in the sequence");
-      System.out.println("\tA '-' means that one of the letters you chose a letter that is in the sequence but not in the right order.");
-      System.out.println("\tAn 'O' means one of the letters you chose was both in the sequence and in the correct position");
+      System.out.println("- The cod will be comprised of a combination of the letters A, B, C, D, E , and F.");
+      System.out.println("- With each guess you make, the computer respond with a combination of 4 digits. Each digit have the following meaning:");
+      System.out.println("\t(0) One of the letters you chose is not in the sequence");
+      System.out.println("\t(1) One of the letters is in the sequence but in the wrong slot");
+      System.out.println("\t(2) One of the letters is both in the sequence and in the correct slot");
+      System.out.println("NOTE: The order of the digits may not be the same as the way you ordered the letters in your guess.");
+      System.out.println("Example: The code is 'ABDD', and you guess 'ADCB'. Responses of '2101', '1210', or '2110' are all valid.");
+      System.out.println("");
 
+      // set difficulty
       setDifficulty();
       generateCode();
-      // main game loop
+
+      // Enter main game loop
       while (!solved  && currentTurn < maxTurns) {
+        System.out.println("********** TURN " + (currentTurn + 1) + " **********");
+        System.out.println("");
         promptGuess();
         rateGuess();
         printTurnResults(currentTurn);
         checkIfSolved();
-        printAll();
-        currentTurn++;
+        currentTurn++; // increment turn number;
       }
-
+      // run method that handles game ending
       endGame();
   }
   // generate random code for user to guess
@@ -50,7 +61,6 @@ public class StoreDataInArray {
     for (int i = 0; i < code.length; i++) {
       randIdx = rand.nextInt(VALIDCHARS.length());
       randChar = VALIDCHARS.charAt(randIdx);
-      System.out.println(randChar);
       code[i] = randChar;
     }
 
@@ -63,19 +73,21 @@ public class StoreDataInArray {
     System.out.println("Code Generated!");
   }
   // set difficulty
+
   public static void setDifficulty() {
     Scanner scan = new Scanner(System.in);
     String selection = "";
     // prompt user for difficulty while not set
     while (maxTurns == 0) {
       //print prompt
-      System.out.println("Please select a difficulty (ex. MEDIUM, not case-sensitive):");
+      System.out.println("Please enter a difficulty level(ex. MEDIUM, not case-sensitive):");
       System.out.println("\tEASY (12 turns)");
       System.out.println("\tMEDIUM (10 turns)");
       System.out.println("\tHARD (8 turns)");
       System.out.println("\tMASTERMIND (6 turns)");
 
       selection = scan.next().toUpperCase();
+      System.out.println("");
       // switch to set difficulty/detect invalid input
       switch (selection) {
         case "EASY" : // if the selection is easy
@@ -97,6 +109,7 @@ public class StoreDataInArray {
         default :
           System.out.println("Invalid choice! Please chose a valid difficulty level!");
       }
+      System.out.println("");
     }
     guesses = new char[maxTurns][4];
     responses = new char[maxTurns][4];
@@ -146,27 +159,51 @@ public class StoreDataInArray {
     }
   }
 
+  // method that rates user guess
   public static void rateGuess() {
-    // iterate through current guesses
-    int correctPlacements = 0;
-    int correctColors = 0;
-    int incorrect = 0;
+    boolean[] confirmed = new boolean[]{false, false, false, false};
+    char c;
 
+    // check for
     for (int i = 0; i < guesses[currentTurn].length; i++) {
       // if correct color and placement
       if (guesses[currentTurn][i] == code[i]) {
-        correctPlacements++;
-        responses[currentTurn][i] = 'O';
-      } else if (indexOfCharArray(guesses[currentTurn][i], code) == -1) { // if not present at all in code
-        responses[currentTurn][i] = 'X';
-      } else { // if right color but wrong placement
+        confirmed[i] = true;
+        responses[currentTurn][i] = '2';
+      }
+      // else if (indexOfCharArray(guesses[currentTurn][i], code, 0) == -1) { // if not present at all in code
+      //   confirmed[i] = true;
+      //   responses[currentTurn][i] = '0';
+      // }
+    }
+    // check for middle ground pegs
 
+    for (int j = 0; j < confirmed.length; j++) {
+      if (confirmed[j] == false) {
+        c = guesses[currentTurn][j];
+        // iterate through code?
+        for (int k = 0; k < code.length; k++) {
+          // if the slot hasnt been confirmed and the slot is equal to
+          if (confirmed[k] == false && code[k] == c) {
+            // checked[j] = true;
+            responses[currentTurn][j] = '1';
+          }
+        }
       }
     }
+
+    for (int l = 0; l < guesses[currentTurn].length; l++) {
+      if (responses[currentTurn][l] != '2' && responses[currentTurn][l] != '1') {
+        responses[currentTurn][l] = '0';
+      }
+    }
+    // shuffle the array to confuse people
+
   }
 
-  public static int indexOfCharArray(char target, char[] arr) {
-    for (int i = 0; i < arr.length; i++) {
+  // deprecated method due to lack of use; searches for target character in array from user defined start
+  public static int indexOfCharArray(char target, char[] arr, int startIdx) {
+    for (int i = startIdx; i < arr.length; i++) {
       if (arr[i] == target) {
         return i;
       }
@@ -174,21 +211,31 @@ public class StoreDataInArray {
     return -1;
   }
 
+  // method to check responses for complete solution
   public static void checkIfSolved() {
     // change solved to true for check
     solved = true;
     for (int i = 0; i < responses[currentTurn].length; i++) {
       // if response peg is not a 'correct' peg revert solved to false
-      if (!(responses[currentTurn][i] == 'O')) {
-        System.out.println("NOPE");
+      if (!(responses[currentTurn][i] == '2')) {
         solved = false;
       }
     }
   }
 
+  public static void printCode() {
+    String codeString = new String(code);
+    System.out.println("The Code was: " + codeString);
+  }
+
   public static void endGame() {
+    System.out.println("");
+    System.out.println("You have finished the game!");
+    printCode();
+    System.out.println("");
+
     if (solved) {
-      System.out.println("Congratulations! You solved the code in " + currentTurn + "turns!");
+      System.out.println("Congratulations! You solved the code in " + currentTurn + "turn(s)!");
     } else {
       System.out.println("Sorry, you were unable to solve the code... Better luck next time!");
     }
