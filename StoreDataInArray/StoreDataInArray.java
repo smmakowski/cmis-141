@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class StoreDataInArray {
+  // add field for game states for multimethod sharing
   private static final String VALIDCHARS = "ABCDEFG";
   private static char[] code = new char[4];
   private static int currentTurn = 0;
@@ -44,7 +45,7 @@ public class StoreDataInArray {
           System.out.println("");
         }
       }
-      // set difficulty and generate random code
+      // set difficulty and generate random code using methods
       setDifficulty();
       generateCode();
 
@@ -52,11 +53,6 @@ public class StoreDataInArray {
       while (!solved  && currentTurn < maxTurns) {
         System.out.println("********** TURN " + (currentTurn + 1) + " **********");
         takeTurn();
-        // promptGuess();
-        // rateGuess();
-        // printTurnResults(currentTurn);
-        // checkIfSolved();
-        // currentTurn++; // increment turn number;
       }
       // run method that handles game ending
       endGame();
@@ -66,11 +62,12 @@ public class StoreDataInArray {
     Random rand = new Random();
     char randChar;
     int randIdx = 0;
-
+    // for each slot in code
     for (int i = 0; i < code.length; i++) {
+      //generate random characters using random numbers and indexs
       randIdx = rand.nextInt(VALIDCHARS.length());
       randChar = VALIDCHARS.charAt(randIdx);
-      code[i] = randChar;
+      code[i] = randChar; // assign index in code array
     }
 
     System.out.println("");
@@ -118,6 +115,7 @@ public class StoreDataInArray {
           System.out.println("Invalid choice! Please chose a valid difficulty level!");
       }
     }
+    // depending on difficulty create guesses and responses array based on maxTurns
     guesses = new char[maxTurns][4];
     responses = new char[maxTurns][4];
   }
@@ -126,7 +124,7 @@ public class StoreDataInArray {
     Scanner scan = new Scanner(System.in);
     boolean nowSelecting = true;
     String resp = "";
-
+    // prompt user for an option using loop to ensure proper input
     while (nowSelecting) {
       System.out.println("What would you like to do? Please SELECT and action for the options below (Ex. Enter '1' to 'MAKE A GUESS'):");
       System.out.println("\t(1) Make a Guess");
@@ -135,20 +133,20 @@ public class StoreDataInArray {
 
       resp = scan.next();
       switch (resp) {
-        case "1" :
+        case "1" : // logic for taking a turn
           nowSelecting = false;
           promptGuess();
           rateGuess();
           printTurnResults(currentTurn);
           System.out.println("");
           checkIfSolved();
-          currentTurn++; // increment turn number;
+          currentTurn++; // increment turn number (this only occurs if turn is taken via switch)
           break;
-        case "2" :
+        case "2" : // print all turns method
           printAll();
           nowSelecting = false;
           break;
-        case "3" :
+        case "3" : // repreint directions
           printInstructions();
           nowSelecting = false;
           break;
@@ -157,7 +155,7 @@ public class StoreDataInArray {
       }
     }
   }
-
+  // prompt user for a guess and fill guesses array
   public static void promptGuess() {
     Scanner scan = new Scanner(System.in);
     char[] guess = new char[4];
@@ -165,7 +163,7 @@ public class StoreDataInArray {
     int i = 0;
     String place = "";
 
-    // prompt user for choices to populate guess array
+    // swtich to determine which slot for string
     while (i < 4) {
       switch (i) {
         case 0 :
@@ -198,36 +196,39 @@ public class StoreDataInArray {
     }
     // return guess
   }
-
+  // method to print results of an individual turns
   public static void printTurnResults(int turn) {
     System.out.println("");
     System.out.println("<<<<< RESULTS FOR TURN " + (turn + 1) + " >>>>>");
     System.out.print("Your Guess: ");
+    //iterate throgh array and print guess charactes
     for (int i = 0; i < guesses[turn].length; i++) {
       System.out.print(Character.toString(guesses[turn][i]) + ' ');
     }
     System.out.print('\n');
-
+    // iteratethrogh response array and proint repsnse characters
     System.out.print("Computer's Response: ");
     for (int j = 0; j < responses[turn].length; j++) {
       System.out.print(Character.toString(responses[turn][j]) + ' ');
     }
     System.out.print('\n');
   }
-
+  // method to print all repsonses up to current
   public static void printAll() {
+    // handle printign for first turn (since no guesses have been made)
     if (currentTurn == 0) {
       System.out.println("");
       System.out.println("You haven't made any guesses yet! Please wait until TURN 2.");
       System.out.println("");
       return;
     }
+    // iterate through rray until current turn and call printTrurn
     for (int i = 0; i < currentTurn; i++) {
         printTurnResults(i);
     }
     System.out.println("");
   }
-
+  //method that prints insturctiosn
   public static void printInstructions() {
     System.out.println("");
     System.out.println("********** INSTRUCTIONS **********");
@@ -244,25 +245,27 @@ public class StoreDataInArray {
 
   // method that rates user guess
   public static void rateGuess() {
+    // variavels to hold confirmed characteres and current character
     boolean[] confirmed = new boolean[]{false, false, false, false};
     char c;
 
-    // check for
+    // iterate through guess and compare to code
     for (int i = 0; i < guesses[currentTurn].length; i++) {
-      // if correct color and placement
+      // if correct color and placement confirm in array and add notation to responses
       if (guesses[currentTurn][i] == code[i]) {
         confirmed[i] = true;
         responses[currentTurn][i] = '2';
       }
     }
     // check for middle ground pegs
-
+    // iterate through guesses and assess if right letter wrong slot
     for (int j = 0; j < confirmed.length; j++) {
+      // it the particular spot has not yet been confirmed
       if (confirmed[j] == false) {
         c = guesses[currentTurn][j];
-        // iterate through code?
+        // iterate through 'code array'
         for (int k = 0; k < code.length; k++) {
-          // if the slot hasnt been confirmed and the slot is equal to
+          // if the slot hasnt been confirmed and the slot is
           if (confirmed[k] == false && code[k] == c) {
             // checked[j] = true;
             responses[currentTurn][j] = '1';
@@ -270,7 +273,7 @@ public class StoreDataInArray {
         }
       }
     }
-
+    // fill the rest of of the slots with 'fail characters'
     for (int l = 0; l < guesses[currentTurn].length; l++) {
       if (responses[currentTurn][l] != '2' && responses[currentTurn][l] != '1') {
         responses[currentTurn][l] = '0';
@@ -280,13 +283,18 @@ public class StoreDataInArray {
     shuffleResponse(currentTurn);
     // print out 'computing message'
   }
+  // method to shuffle response using swaps
   public static void shuffleResponse(int turn) {
     Random rand = new Random();
     char temp;
     int randIdx;
+    // iterate through array once
     for (int i = 0; i < responses[turn].length; i++) {
+      //generate a random index numebr
       randIdx = rand.nextInt(4);
+      // hold current value in temp
       temp = responses[turn][i];
+      //swap the current index value with the randomly selected one
       responses[turn][i] = responses[turn][randIdx];
       responses[turn][randIdx] = temp;
     }
@@ -294,11 +302,15 @@ public class StoreDataInArray {
 
   // deprecated method due to lack of use; searches for target character in array from user defined start
   public static int indexOfCharArray(char target, char[] arr, int startIdx) {
+    //iterate through array from start
+
     for (int i = startIdx; i < arr.length; i++) {
+      // if target found return index
       if (arr[i] == target) {
         return i;
       }
     }
+    // return -1 for not found
     return -1;
   }
 
@@ -313,19 +325,20 @@ public class StoreDataInArray {
       }
     }
   }
-
+  // method to print hidden code
   public static void printCode() {
+    // convert array to sting and rint
     String codeString = new String(code);
     System.out.println("");
     System.out.println("THE CODE YOUR WERE TRYING TO GUESS WAS: " + codeString);
   }
-
+  // end game phase method
   public static void endGame() {
     System.out.println("");
     System.out.println("You have FINISHED the game!");
     printCode();
     System.out.println("");
-
+    // print win depending string
     if (solved) {
       System.out.println("CONGRATULATIONS! You solved the code in " + currentTurn + "turn(s)!");
     } else {
