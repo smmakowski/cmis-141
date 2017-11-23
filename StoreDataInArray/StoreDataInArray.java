@@ -51,11 +51,12 @@ public class StoreDataInArray {
       // Enter main game loop
       while (!solved  && currentTurn < maxTurns) {
         System.out.println("********** TURN " + (currentTurn + 1) + " **********");
-        promptGuess();
-        rateGuess();
-        printTurnResults(currentTurn);
-        checkIfSolved();
-        currentTurn++; // increment turn number;
+        takeTurn();
+        // promptGuess();
+        // rateGuess();
+        // printTurnResults(currentTurn);
+        // checkIfSolved();
+        // currentTurn++; // increment turn number;
       }
       // run method that handles game ending
       endGame();
@@ -136,12 +137,36 @@ public class StoreDataInArray {
   public static void takeTurn() {
     Scanner scan = new Scanner(System.in);
     boolean nowSelecting = true;
-    System.out.println("What would you like to do? Please SELECT and action for the options below (Ex. Enter '1' to 'MAKE A GUESS'):");
-    System.out.println("\t(1) Make a Guess");
-    System.out.println("\t(2) Print all guesses and results up to present");
-    System.out.println("\t(3) Print instructions again");
+    String resp = "";
 
-    /// refer to main and this function to implment choice logic
+    while (nowSelecting) {
+      System.out.println("What would you like to do? Please SELECT and action for the options below (Ex. Enter '1' to 'MAKE A GUESS'):");
+      System.out.println("\t(1) Make a Guess");
+      System.out.println("\t(2) Print all guesses and results up to present");
+      System.out.println("\t(3) Print instructions again");
+
+      resp = scan.next();
+      switch (resp) {
+        case "1" :
+          nowSelecting = false;
+          promptGuess();
+          rateGuess();
+          printTurnResults(currentTurn);
+          checkIfSolved();
+          currentTurn++; // increment turn number;
+          break;
+        case "2" :
+          printAll();
+          nowSelecting = false;
+          break;
+        case "3" :
+          printInstructions();
+          nowSelecting = false;
+          break;
+        default :
+          System.out.print("Input is INVALID! Please enter valid input");
+      }
+    }
 
 
   }
@@ -205,6 +230,12 @@ public class StoreDataInArray {
   }
 
   public static void printAll() {
+    if (currentTurn == 0) {
+      System.out.println("");
+      System.out.println("You haven't made any guesses yet! Please wait until TURN 2.");
+      System.out.println("");
+      return;
+    }
     for (int i = 0; i <= currentTurn; i++) {
         printTurnResults(i);
     }
@@ -225,7 +256,7 @@ public class StoreDataInArray {
   }
 
   // method that rates user guess
-  public static void rateGuess() throws InterruptedException {
+  public static void rateGuess()/* throws InterruptedException */ {
     boolean[] confirmed = new boolean[]{false, false, false, false};
     char c;
 
