@@ -23,17 +23,7 @@ public class StoreDataInArray {
 
       // print opening lines, and instructions
       System.out.println("Welcome! This program is a command-line version of the boardgame 'MASTERMIND'.");
-      System.out.println("");
-      System.out.println("********** INSTRUCTIONS **********");
-      System.out.println("- In this game, the computer will come up with a '4 Letter Code' for you to guess.");
-      System.out.println("- The code will be comprised of a combination of the letters A, B, C, D, E , and F.");
-      System.out.println("- With each guess you make, the computer respond with a combination of 4 digits. Each digit have the following meaning:");
-      System.out.println("\t(0) One of the letters you chose is not in the sequence");
-      System.out.println("\t(1) One of the letters is in the sequence but in the wrong slot");
-      System.out.println("\t(2) One of the letters is both in the sequence and in the correct slot");
-      System.out.println("NOTE: The order of the digits may not be the same as the way you ordered the letters in your guess." +
-      "Example: The code is 'ABDD', and you guess 'ADCB'. Responses of '2101', '1210', or '2110' are all valid.");
-      System.out.println("");
+      printInstructions();
 
       // ask the user if they want to continue using 'while' loop to validate proper input
       while (true) {
@@ -143,6 +133,19 @@ public class StoreDataInArray {
     responses = new char[maxTurns][4];
   }
 
+  public static void takeTurn() {
+    Scanner scan = new Scanner(System.in);
+    boolean nowSelecting = true;
+    System.out.println("What would you like to do? Please SELECT and action for the options below (Ex. Enter '1' to 'MAKE A GUESS'):");
+    System.out.println("\t(1) Make a Guess");
+    System.out.println("\t(2) Print all guesses and results up to present");
+    System.out.println("\t(3) Print instructions again");
+
+    /// refer to main and this function to implment choice logic
+
+
+  }
+
   public static void promptGuess() {
     Scanner scan = new Scanner(System.in);
     char[] guess = new char[4];
@@ -202,10 +205,23 @@ public class StoreDataInArray {
   }
 
   public static void printAll() {
-
     for (int i = 0; i <= currentTurn; i++) {
         printTurnResults(i);
     }
+  }
+
+  public static void printInstructions() {
+    System.out.println("");
+    System.out.println("********** INSTRUCTIONS **********");
+    System.out.println("- In this game, the computer will come up with a '4 Letter Code' for you to guess.");
+    System.out.println("- The code will be comprised of a combination of the letters A, B, C, D, E , and F.");
+    System.out.println("- With each guess you make, the computer respond with a combination of 4 digits. Each digit have the following meaning:");
+    System.out.println("\t(0) One of the letters you chose is not in the sequence");
+    System.out.println("\t(1) One of the letters is in the sequence but in the wrong slot");
+    System.out.println("\t(2) One of the letters is both in the sequence and in the correct slot");
+    System.out.println("NOTE: The order of the digits may not be the same as the way you ordered the letters in your guess." +
+    "Example: The code is 'ABDD', and you guess 'ADCB'. Responses of '2101', '1210', or '2110' are all valid.");
+    System.out.println("");
   }
 
   // method that rates user guess
