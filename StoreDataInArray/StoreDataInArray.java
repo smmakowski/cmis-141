@@ -1,5 +1,5 @@
 /* File: Guitar.java
- * Author: Stephen
+ * Author: Stephen Makowski
  * Date: November 22, 2017
  * Purpose: Demonstrate understanding of Arrays and array length though a
  * command line implementation of the 'Guessing' phase of 'Mastermind'.
