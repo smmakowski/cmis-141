@@ -1,7 +1,7 @@
 /* File: Guitar.java
  * Author: Stephen
  * Date: November 22, 2017
- * Purpose: Demonstrate understanding of arrays and array length though a
+ * Purpose: Demonstrate understanding of Arrays and array length though a
  * command line implementation of the 'Guessing' phase of 'Mastermind'.
  */
 
@@ -26,23 +26,41 @@ public class StoreDataInArray {
       System.out.println("");
       System.out.println("********** INSTRUCTIONS **********");
       System.out.println("- In this game, the computer will come up with a '4 Letter Code' for you to guess.");
-      System.out.println("- The cod will be comprised of a combination of the letters A, B, C, D, E , and F.");
+      System.out.println("- The code will be comprised of a combination of the letters A, B, C, D, E , and F.");
       System.out.println("- With each guess you make, the computer respond with a combination of 4 digits. Each digit have the following meaning:");
       System.out.println("\t(0) One of the letters you chose is not in the sequence");
       System.out.println("\t(1) One of the letters is in the sequence but in the wrong slot");
       System.out.println("\t(2) One of the letters is both in the sequence and in the correct slot");
-      System.out.println("NOTE: The order of the digits may not be the same as the way you ordered the letters in your guess.");
-      System.out.println("Example: The code is 'ABDD', and you guess 'ADCB'. Responses of '2101', '1210', or '2110' are all valid.");
+      System.out.println("NOTE: The order of the digits may not be the same as the way you ordered the letters in your guess." +
+      "Example: The code is 'ABDD', and you guess 'ADCB'. Responses of '2101', '1210', or '2110' are all valid.");
       System.out.println("");
 
-      // set difficulty
+      // ask the user if they want to continue using 'while' loop to validate proper input
+      while (true) {
+        System.out.println("Would you like to play the game (enter 'Y' or 'YES' to continue, 'N' for 'NO' to leave; Not case-sensitive)?");
+        resp = scan.next().toUpperCase();
+        if (resp.equals("Y") || resp.equals("YES")) {
+          System.out.println("");
+          break;
+        } else if (resp.equals("N") || resp.equals("NO")){
+          System.out.println("");
+          System.out.println("OKAY! Maybe next time!");
+          System.out.println("");
+          System.out.println("~~~~~ END ~~~~~");
+          System.exit(0);
+        } else {
+          System.out.println("");
+          System.out.println("You have entered and INVALID INPUT! Please try again!");
+          System.out.println("");
+        }
+      }
+      // set difficulty and generate random code
       setDifficulty();
       generateCode();
-
+      printCode();
       // Enter main game loop
       while (!solved  && currentTurn < maxTurns) {
         System.out.println("********** TURN " + (currentTurn + 1) + " **********");
-        System.out.println("");
         promptGuess();
         rateGuess();
         printTurnResults(currentTurn);
@@ -64,13 +82,24 @@ public class StoreDataInArray {
       code[i] = randChar;
     }
 
-    System.out.println("Please wait... computer generating code...");
+    Thread.sleep(1000);
+    System.out.println("");
+    System.out.print("The Computer is generating random code. *WARNING* (Any attempted during this time may " +
+    "be entered into guess slots for next turn). PLEASE WAIT . ");
+
     for (int j = 0; j < 3; j++) {
       System.out.print(". ");
       Thread.sleep(1000);
     }
+
+    System.out.print("\n");
     System.out.println("");
-    System.out.println("Code Generated!");
+    System.out.println("CODE GENERATED!");
+    Thread.sleep(1000);
+    System.out.println("");
+    System.out.println("LET'S PLAY!");
+    System.out.println("");
+
   }
   // set difficulty
 
@@ -80,11 +109,11 @@ public class StoreDataInArray {
     // prompt user for difficulty while not set
     while (maxTurns == 0) {
       //print prompt
-      System.out.println("Please enter a difficulty level(ex. MEDIUM, not case-sensitive):");
-      System.out.println("\tEASY (12 turns)");
-      System.out.println("\tMEDIUM (10 turns)");
-      System.out.println("\tHARD (8 turns)");
-      System.out.println("\tMASTERMIND (6 turns)");
+      System.out.println("Please enter a DIFFICULTY LEVEL (ex. MEDIUM, not case-sensitive):");
+      System.out.println("\t- EASY (12 turns)");
+      System.out.println("\t- MEDIUM (10 turns)");
+      System.out.println("\t- HARD (8 turns)");
+      System.out.println("\t- MASTERMIND (6 turns)");
 
       selection = scan.next().toUpperCase();
       System.out.println("");
@@ -109,7 +138,6 @@ public class StoreDataInArray {
         default :
           System.out.println("Invalid choice! Please chose a valid difficulty level!");
       }
-      System.out.println("");
     }
     guesses = new char[maxTurns][4];
     responses = new char[maxTurns][4];
@@ -120,25 +148,45 @@ public class StoreDataInArray {
     char[] guess = new char[4];
     char choice;
     int i = 0;
+    String place = "";
 
     // prompt user for choices to populate guess array
     while (i < 4) {
-      System.out.println("Please enter your choice for 'SLOT" + (i + 1) + "' (Not case-sensitive): ");
-      System.out.println("(If you enter more than one character at a time, it will only use the first one)");
-      choice = scan.nextLine().toUpperCase().charAt(0);
+      switch (i) {
+        case 0 :
+          place = "FIRST";
+          break;
+        case 1:
+          place = "SECOND";
+          break;
+        case 2 :
+          place = "THIRD";
+          break;
+        case 3 :
+          place = "FOURTH";
+          break;
+        default:
+          // do nothing because we will never hit the default
+      }
+      System.out.println("");
+      System.out.println("Please enter your choice for '" + place + " SLOT' (Not case-sensitive): ");
+      System.out.println("(If you enter more than one character at a time, only the FIRST character will be considered)");
+      choice = scan.next().toUpperCase().charAt(0);
       // if choice is valid chacter, move to mext index
       if (VALIDCHARS.indexOf(choice) != -1) {
         guesses[currentTurn][i] = choice;
         i++;
       } else {
-        System.out.println("You have entered an invalid input! Please enter A, B, C, D, E, or F (or at least something that starts with one of those letters).");
+        System.out.println("");
+        System.out.println("You have entered an INVALID INPUT! Please enter A, B, C, D, E, or F (or at least something that starts with one of those letters).");
       }
     }
     // return guess
   }
 
   public static void printTurnResults(int turn) {
-    System.out.println("<<< Results for turn " + (turn + 1) + " >>>");
+    System.out.println("");
+    System.out.println("<<<<< RESULTS FOR TURN " + (turn + 1) + " >>>>>");
     System.out.print("Your Guess: ");
     for (int i = 0; i < guesses[turn].length; i++) {
       System.out.print(Character.toString(guesses[turn][i]) + ' ');
@@ -150,6 +198,7 @@ public class StoreDataInArray {
       System.out.print(Character.toString(responses[turn][j]) + ' ');
     }
     System.out.print('\n');
+    System.out.println("");
   }
 
   public static void printAll() {
@@ -160,7 +209,7 @@ public class StoreDataInArray {
   }
 
   // method that rates user guess
-  public static void rateGuess() {
+  public static void rateGuess() throws InterruptedException {
     boolean[] confirmed = new boolean[]{false, false, false, false};
     char c;
 
@@ -171,10 +220,6 @@ public class StoreDataInArray {
         confirmed[i] = true;
         responses[currentTurn][i] = '2';
       }
-      // else if (indexOfCharArray(guesses[currentTurn][i], code, 0) == -1) { // if not present at all in code
-      //   confirmed[i] = true;
-      //   responses[currentTurn][i] = '0';
-      // }
     }
     // check for middle ground pegs
 
@@ -197,8 +242,20 @@ public class StoreDataInArray {
         responses[currentTurn][l] = '0';
       }
     }
-    // shuffle the array to confuse people
-
+    // shuffle the array to avoid making it too obvious
+    shuffleResponse(currentTurn);
+    // print out 'computing message'
+  }
+  public static void shuffleResponse(int turn) {
+    Random rand = new Random();
+    char temp;
+    int randIdx;
+    for (int i = 0; i < responses[turn].length; i++) {
+      randIdx = rand.nextInt(4);
+      temp = responses[turn][i];
+      responses[turn][i] = responses[turn][randIdx];
+      responses[turn][randIdx] = temp;
+    }
   }
 
   // deprecated method due to lack of use; searches for target character in array from user defined start
@@ -225,19 +282,20 @@ public class StoreDataInArray {
 
   public static void printCode() {
     String codeString = new String(code);
-    System.out.println("The Code was: " + codeString);
+    System.out.println("");
+    System.out.println("THE CODE YOUR WERE TRYING TO GUESS WAS: " + codeString);
   }
 
   public static void endGame() {
     System.out.println("");
-    System.out.println("You have finished the game!");
+    System.out.println("You have FINISHED the game!");
     printCode();
     System.out.println("");
 
     if (solved) {
-      System.out.println("Congratulations! You solved the code in " + currentTurn + "turn(s)!");
+      System.out.println("CONGRATULATIONS! You solved the code in " + currentTurn + "turn(s)!");
     } else {
-      System.out.println("Sorry, you were unable to solve the code... Better luck next time!");
+      System.out.println("SORRY, you were unable to solve the code... Better luck next time!");
     }
     System.out.println("");
     System.out.println("Thanks for playing!");
