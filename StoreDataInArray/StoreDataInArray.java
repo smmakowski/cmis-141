@@ -222,6 +222,10 @@ public class StoreDataInArray {
       System.out.println("");
       return;
     }
+
+    /** Demonstrate how to get length property from array **/
+    System.out.println("");
+    System.out.println("You have completed " + (currentTurn + 1) + " guesses out of a max of " + guesses.length + " gueses.");
     // iterate through rray until current turn and call printTrurn
     for (int i = 0; i < currentTurn; i++) {
         printTurnResults(i);
