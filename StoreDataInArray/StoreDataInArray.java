@@ -17,7 +17,7 @@ public class StoreDataInArray {
   private static char[][] guesses;
   private static char[][] responses;
 
-  public static void main(String[] args) throws InterruptedException {
+  public static void main(String[] args) {
       Scanner scan = new Scanner(System.in);
       String resp = "";
 
@@ -47,7 +47,7 @@ public class StoreDataInArray {
       // set difficulty and generate random code
       setDifficulty();
       generateCode();
-      printCode();
+
       // Enter main game loop
       while (!solved  && currentTurn < maxTurns) {
         System.out.println("********** TURN " + (currentTurn + 1) + " **********");
@@ -62,7 +62,7 @@ public class StoreDataInArray {
       endGame();
   }
   // generate random code for user to guess
-  public static void generateCode() throws InterruptedException {
+  public static void generateCode() {
     Random rand = new Random();
     char randChar;
     int randIdx = 0;
@@ -73,20 +73,8 @@ public class StoreDataInArray {
       code[i] = randChar;
     }
 
-    Thread.sleep(1000);
     System.out.println("");
-    System.out.print("The Computer is generating random code. *WARNING* (Any attempted during this time may " +
-    "be entered into guess slots for next turn). PLEASE WAIT . ");
-
-    for (int j = 0; j < 3; j++) {
-      System.out.print(". ");
-      Thread.sleep(1000);
-    }
-
-    System.out.print("\n");
-    System.out.println("");
-    System.out.println("CODE GENERATED!");
-    Thread.sleep(1000);
+    System.out.println("The Computer has generated a RANDOM CODE!");
     System.out.println("");
     System.out.println("LET'S PLAY!");
     System.out.println("");
@@ -152,6 +140,7 @@ public class StoreDataInArray {
           promptGuess();
           rateGuess();
           printTurnResults(currentTurn);
+          System.out.println("");
           checkIfSolved();
           currentTurn++; // increment turn number;
           break;
@@ -167,8 +156,6 @@ public class StoreDataInArray {
           System.out.print("Input is INVALID! Please enter valid input");
       }
     }
-
-
   }
 
   public static void promptGuess() {
@@ -226,7 +213,6 @@ public class StoreDataInArray {
       System.out.print(Character.toString(responses[turn][j]) + ' ');
     }
     System.out.print('\n');
-    System.out.println("");
   }
 
   public static void printAll() {
@@ -236,9 +222,10 @@ public class StoreDataInArray {
       System.out.println("");
       return;
     }
-    for (int i = 0; i <= currentTurn; i++) {
+    for (int i = 0; i < currentTurn; i++) {
         printTurnResults(i);
     }
+    System.out.println("");
   }
 
   public static void printInstructions() {
@@ -256,7 +243,7 @@ public class StoreDataInArray {
   }
 
   // method that rates user guess
-  public static void rateGuess()/* throws InterruptedException */ {
+  public static void rateGuess() {
     boolean[] confirmed = new boolean[]{false, false, false, false};
     char c;
 
