@@ -73,7 +73,7 @@ public class StoreDataInArray {
     System.out.println("");
     System.out.println("The Computer has generated a RANDOM CODE!");
     System.out.println("");
-    System.out.println("LET'S PLAY!");
+    System.out.println(" PLAY!");
     System.out.println("");
 
   }
