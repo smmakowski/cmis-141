@@ -1,3 +1,9 @@
+/*
+	Filename: HeadPhonesTest.java
+	Author: Stephen Makowski
+	Date: Novemeber , 2017
+	Purpose: Test class for HeadPhones.java that invokes methods from the HeadPhones Class
+*/
 import java.awt.Color;
 
 public class HeadPhonesTest {
@@ -11,6 +17,8 @@ public class HeadPhonesTest {
 		
 		// use setter methods to set fields to arbitrary values
 		// not setMethods not used on case1 to test default constructor values
+		
+		// set fields for case 2 using 
 		case2.setIsPluggedIn(true);
 		case2.setManufacturer("Audio Technica");
 		case2.setHeadPhoneColor(Color.black);
