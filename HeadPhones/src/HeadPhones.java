@@ -9,9 +9,11 @@ import java.awt.Color; // import color
 
 public class HeadPhones {
 	// class constants
+	final int MUTE = 0;
 	final int LOW = 1;
  	final int MEDIUM = 2;
  	final int HIGH = 3;
+ 	
  	// class fields
  	private int volume;
  	private boolean pluggedIn;
@@ -24,9 +26,9 @@ public class HeadPhones {
  		this.pluggedIn = false; // init with defaut
  		// no defaults were provided in prompt for below values
  		// these can be set
- 		this.manufacturer = "";
- 		this.headPhoneColor = null;
- 		this.headPhoneModel = "";
+// 		this.manufacturer = null;
+// 		this.headPhoneColor = null;
+// 		this.headPhoneModel = null;
  	}
  	
  	//getter methods for each field
@@ -34,7 +36,7 @@ public class HeadPhones {
  		return this.volume;
  	}
  	
- 	public boolean getIsPluggedIn() {
+ 	public boolean getPluggedIn() {
  		return this.pluggedIn;
  	}
  	
@@ -46,7 +48,7 @@ public class HeadPhones {
  		return this.headPhoneColor;
  	}
  	
- 	public String getHeadphoneModel() {
+ 	public String getHeadPhoneModel() {
  		return this.headPhoneModel;
  	}
  	
@@ -65,29 +67,42 @@ public class HeadPhones {
  		
  	} */
  	
- 	public void setIsPluggedIn() {
- 	
+ 	public void setIsPluggedIn(boolean pluggedIn) {
+ 		this.pluggedIn = pluggedIn;
  	}
  	
- 	public void setManufacturer() {
- 		
+ 	public void setManufacturer(String manufacturer) {
+ 		this.manufacturer = manufacturer;
  	}
  	
- 	public void setHeadPhoneColor() {
- 		
+ 	public void setHeadPhoneColor(Color color) {
+ 		this.headPhoneColor = color;
  	}
  	
- 	public void setHeadPhoneModel() {
- 		
+ 	public void setHeadPhoneModel(String model) {
+ 		this.headPhoneModel = model;
  	}
  	
  	// toString Method
  	
- 	public String toString() {
- 		
+ 	public String toString() {    
+ 		return "(volume=" + this.volume + ", pluggedIn=" + this.pluggedIn +
+ 		", manufacturer=" + this.manufacturer + ", headPhoneColor=" + this.headPhoneColor +
+ 		", headPhoneModel=" + this.headPhoneModel + ")";
  	}
- 	
+ 	// change/set volume method 
  	public void changeVolume(int volume) {
- 		
+ 		String[] modes = new String[]{"MUTE", "LOW", "MEDIUM", "HIGH"};
+ 		if (volume == this.volume) {
+ 			System.out.println("ERROR: Volume (" + volume +") is same as current Volume Level. Volume will remain at " + 
+ 			this.volume + " (" + modes[this.volume] +").");
+ 		} else if (volume >= 1 && volume <= 3) {
+ 			System.out.println("Volume has been changed from " + volume + 
+ 			" (" + modes[volume] + ") to " + this.volume + " (" + modes[this.volume] + ").");
+ 			this.volume = volume;
+ 		} else {
+ 			System.out.println("ERROR: Volume (" + volume +") not supported. Volume is currently " + this.volume +
+ 			" (" + modes[this.volume] +").");
+ 		}
  	}
 }
