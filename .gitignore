@@ -1,5 +1,13 @@
 # class files
 **/*.class
 
+# class file directories for Eclipse projects
+**/bin
+
+# misc files that eclipse puts in directories
+**/.classpath
+**/.project
+
 # .DS_Store
 **/.DS_Store
+/bin/
