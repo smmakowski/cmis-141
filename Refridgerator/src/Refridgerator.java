@@ -16,7 +16,7 @@ public class Refridgerator {
 	private int capacity;
 	private int temperatureSetting;
 	private ArrayList<String> storage;
-	// constructors: with and without args
+	// constructor
 	public Refridgerator(String manufacturer, String model, int capacity) {
 		this.manufacturer = manufacturer;
 		this.model = model;
@@ -32,15 +32,7 @@ public class Refridgerator {
 		this.temperatureSetting = RECOMMENDED;
 		this.storage = new ArrayList<String>();
 	}
-	
-	public Refridgerator() {
-		this.manufacturer = null;
-		this.model = null;
-		this.isPluggedIn = false;
-		this.capacity = 10;
-		this.temperatureSetting = RECOMMENDED;
-		this.storage = new ArrayList<String>();
-	}
+
 	// methods
 	
 	public void togglePluggedIn() { // toggles this.pluggedin 
