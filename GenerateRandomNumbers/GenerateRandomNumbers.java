@@ -1,3 +1,12 @@
+/*
+  Filename: GenerateRandomNumbers.java
+  Author: Stephen Makowski
+  Date: December 4, 2017
+  Purpose: Create a program that can take command-line arguments. Program accepts 2 command line
+  arguments numOfRand and maxRand, and will generate numOfRand number of random numbers between 0 and
+  maxRand.
+*/
+
 import java.util.Random;
 import java.util.Arrays;
 
@@ -14,7 +23,7 @@ public class GenerateRandomNumbers {
         maxRand = Integer.parseInt(args[1]);
 
         if (args.length > 2) { // if more than two, notify user that other arguments have been ignored
-          System.out.println("You have entered more than the required arguments. The following arguments were accepted: [" +
+          System.out.print("You have entered more than the required arguments. The following arguments were accepted: [" +
           args[0] + ", " + args[1] + "]. The folowing arguments have been ignored: [");
           // iterate through extra args
           for (int i = 2; i < args.length; i++) {
@@ -40,9 +49,11 @@ public class GenerateRandomNumbers {
     for (int j = 0; j < numOfRand; j++) { // populate array
       randArr[j] = rand.nextInt(maxRand + 1);
     }
-    // print out random number array
+    // print out random number array, sum and avg
     System.out.println("The following " + numOfRand + " random numbers between 0 (inclusive) and " +
     maxRand + " (inclusive) have been generated: " + Arrays.toString(randArr) + ".");
+    System.out.println("The sum of the random numbers is " + sumIntArr(randArr) + ".");
+    System.out.println("The average of the random numbers is " + averageArray(randArr) + ".");
   }
 
   public static int sumIntArr(int[] arr){
@@ -58,5 +69,4 @@ public class GenerateRandomNumbers {
   public static double averageArray(int[] arr) {
     return (double)sumIntArr(arr) / (double)arr.length;
   }
-
 }
