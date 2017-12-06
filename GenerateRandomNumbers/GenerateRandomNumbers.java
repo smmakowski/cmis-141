@@ -22,6 +22,13 @@ public class GenerateRandomNumbers {
         numOfRand = Integer.parseInt(args[0]);
         maxRand = Integer.parseInt(args[1]);
 
+        // handle negative or zero numOfRand
+        if (numOfRand <= 0 || maxRand <= 0) {
+          System.out.println("ERROR: One or both of your arguments: {" + args[0] + ", " + args[1] + "} is not a positive integer." +
+          " Please run program with two positive integers as arguments in command-line (e.g, java GenerateRandomNumbers 10 20).");
+          System.exit(1);
+        }
+
         if (args.length > 2) { // if more than two, notify user that other arguments have been ignored
           System.out.print("You have entered more than the required arguments. The following arguments were accepted: [" +
           args[0] + ", " + args[1] + "]. The folowing arguments have been ignored: [");
@@ -34,12 +41,12 @@ public class GenerateRandomNumbers {
         }
       } catch (NumberFormatException e) { // handle execptions re: parsing integers
         System.out.println("ERROR: One or both of your arguments: {" + args[0] + ", " + args[1] + "} could not be parsed." +
-        " Please run program with two valid integers as arguments in command-line (e.g, java GenerateRandomNumbers 10 20).");
+        " Please run program with two positive integers as arguments in command-line (e.g, java GenerateRandomNumbers 10 20).");
         System.exit(1); // exit
       }
     } else { // else not enogh args, notify and exit
       System.out.println("ERROR: This Random Integer Generator requires 2 command-line arguments." +
-      " Please run program with two valid integers as arguments in command-line (e.g, java GenerateRandomNumbers 5 10).");
+      " Please run program with two positive integers as arguments in command-line (e.g, java GenerateRandomNumbers 5 10).");
       System.exit(0);
     }
 
