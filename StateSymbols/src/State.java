@@ -1,3 +1,9 @@
+/*
+  * File: State.java
+  * Author: Stephen Makowski
+  * Date: November 19, 2017
+  * Purpose: State class with fields, constructor, and methods
+*/
 
 public class State {
 	private String stateName;
