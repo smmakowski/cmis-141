@@ -1,7 +1,7 @@
 /*
   * File: Crime.java
   * Author: Stephen Makowski
-  * Date: December 10, 2017
+  * Date: December 17, 2017
   * Purpose: Crime class to read,parse, and store data from crime files, and perform calculations involving data
   * also includes methods to allow user to view results of calculations
 */
@@ -38,7 +38,7 @@ public class Crime {
 			}
 		}
 	}
-	// method to prompt user for informatio 
+	// method to prompt user for information
 	public void promptUser() {
 		String selection = "";
 		Scanner scan = new Scanner(System.in);
@@ -81,8 +81,9 @@ public class Crime {
 			}
 		}
 	}
+	// private methods for parsing and caluclation
 	
-	public void parseYear(String lineText) throws NumberFormatException {
+	private void parseYear(String lineText) throws NumberFormatException {
 		String[] stats = lineText.split(",");
 		try {
 			// parse and save data from columns
@@ -115,79 +116,72 @@ public class Crime {
 		}
 	}
 	// method to calculate and print largest population increase for year
-	public void getMaxPopulationGrowth() {
-//		for (int i = 0; i < crimeByYear.size(); i++) {
-//			System.out.println(crimeByYear.get(i).year);
-//			System.out.println(crimeByYear.get(i).population);
-//			System.out.println(crimeByYear.get(i).homicideRate);
-//			System.out.println(crimeByYear.get(i).robberyRate);
-//			
-//		}
-		int maxYear = crimeByYear.get(1).year;
-		double maxGrowth = (((double)crimeByYear.get(1).population - (double)crimeByYear.get(0).population) / (double)crimeByYear.get(1).population) * 100.0;
+	private void getMaxPopulationGrowth() {
+		int maxYear = crimeByYear.get(1).getYear();
+		double maxGrowth = (((double)crimeByYear.get(1).getPopulation() - (double)crimeByYear.get(0).getPopulation()) / (double)crimeByYear.get(1).getPopulation()) * 100.0;
 		
 		for (int i = 1; i < crimeByYear.size(); i++) {
-			double yearGrowth = (((double)crimeByYear.get(i).population - (double)crimeByYear.get(i - 1).population) / (double)crimeByYear.get(i).population) * 100.0;
+			double yearGrowth = (((double)crimeByYear.get(i).getPopulation() - (double)crimeByYear.get(i - 1).getPopulation()) / (double)crimeByYear.get(i).getPopulation()) * 100.0;
 			
 			if (yearGrowth > maxGrowth) {
 				maxGrowth = yearGrowth;
-				maxYear = crimeByYear.get(i).year;
+				maxYear = crimeByYear.get(i).getYear();
 			}
 		}
 		
 		System.out.println("The Population Growth was highest during " + (maxYear - 1) + "-" + maxYear);
 	}
 	
-	public void getMaxMurderYear() {
-		int maxYear = crimeByYear.get(0).year;
-		double maxHomicideRate = crimeByYear.get(0).homicideRate;
+	private void getMaxMurderYear() {
+		int maxYear = crimeByYear.get(0).getYear();
+		double maxHomicideRate = crimeByYear.get(0).getHomicideRate();
 		// iterate from second year in list
 		for (int i = 1; i < crimeByYear.size(); i++) {
-			if (crimeByYear.get(i).homicideRate > maxHomicideRate) {
-				maxYear = crimeByYear.get(i).year;
-				maxHomicideRate = crimeByYear.get(i).homicideRate;
+			if (crimeByYear.get(i).getHomicideRate() > maxHomicideRate) {
+				maxYear = crimeByYear.get(i).getYear();
+				maxHomicideRate = crimeByYear.get(i).getHomicideRate();
 			}
 		}
 		
 		System.out.println("The Murder rate was highest in " + maxYear);
 	}
 	
-	public void getMinMurderYear() {
-		int minYear = crimeByYear.get(0).year;
-		double minHomicideRate = crimeByYear.get(0).homicideRate;
+	private void getMinMurderYear() {
+		int minYear = crimeByYear.get(0).getYear();
+		double minHomicideRate = crimeByYear.get(0).getHomicideRate();
 		// iterate from second year in list
 		for (int i = 1; i < crimeByYear.size(); i++) {
-			if (crimeByYear.get(i).homicideRate < minHomicideRate) {
-				minYear = crimeByYear.get(i).year;
-				minHomicideRate = crimeByYear.get(i).homicideRate;
+			if (crimeByYear.get(i).getHomicideRate() < minHomicideRate) {
+				minYear = crimeByYear.get(i).getYear();
+				minHomicideRate = crimeByYear.get(i).getHomicideRate();
 			}
 		}
 		
 		System.out.println("The Murder rate was lowest in " + minYear);
 	}
 	
-	public void getMaxRobberyYear() {
-		int maxYear = crimeByYear.get(0).year;
-		double maxRobberyRate = crimeByYear.get(0).robberyRate;
+	private void getMaxRobberyYear() {
+		int maxYear = crimeByYear.get(0).getYear();
+		double maxRobberyRate = crimeByYear.get(0).getRobberyRate();
 		// iterate from second year in list
 		for (int i = 1; i < crimeByYear.size(); i++) {
-			if (crimeByYear.get(i).robberyRate > maxRobberyRate) {
-				maxYear = crimeByYear.get(i).year;
-				maxRobberyRate = crimeByYear.get(i).robberyRate;
+			if (crimeByYear.get(i).getRobberyRate() > maxRobberyRate) {
+				maxYear = crimeByYear.get(i).getYear();
+				maxRobberyRate = crimeByYear.get(i).getRobberyRate();
 			}
 		}
 		
 		System.out.println("The Robbery rate was highest in " + maxYear);
 	}
 	
-	public void getMinRobberyYear() {
-		int minYear = crimeByYear.get(0).year;
-		double minRobberyRate = crimeByYear.get(0).robberyRate;
+	private void getMinRobberyYear() {
+		int minYear = crimeByYear.get(0).getYear();
+		double minRobberyRate = crimeByYear.get(0).getRobberyRate();
 		// iterate from second year in list
 		for (int i = 1; i < crimeByYear.size(); i++) {
-			if (crimeByYear.get(i).robberyRate < minRobberyRate) {
-				minYear = crimeByYear.get(i).year;
-				minRobberyRate = crimeByYear.get(i).robberyRate;
+			if (crimeByYear.get(i).getRobberyRate() < minRobberyRate) {
+				minYear = crimeByYear.get(i).getYear();
+				minRobberyRate = crimeByYear.get(i).getRobberyRate();
 			}
 		}
 		
