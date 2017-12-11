@@ -1,3 +1,10 @@
+/*
+  * File: StatesDataEntry.java
+  * Author: Stephen Makowski
+  * Date: December 10, 2017
+  * Purpose: data entry class that allows users to search for state names, and print out state symbols
+*/
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
