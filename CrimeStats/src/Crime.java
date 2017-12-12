@@ -20,7 +20,7 @@ public class Crime {
 		String lineText = "";
 		
 		try {
-			//
+			// create fileScanner
 			scan = new Scanner(new File(fileName));
 			// while there are more lines to parse
 			while (scan.hasNextLine()) {
@@ -30,9 +30,9 @@ public class Crime {
 				}
 				lineNum++; //increment line
 			}
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) { // if exception thrown then exit
 			System.err.println("Unable to find file. Please make sure that your file path is correct.");
-		} finally { // after scan is done, close scanner
+		} finally { // after scan is done, close scanner, if created
 			if (scan != null) {
 				scan.close();
 			}
@@ -80,13 +80,13 @@ public class Crime {
 					System.out.println("Please enter a valid question number or 'Q' to Quit (case-sensitive).");
 			}
 		}
+		scan.close();
 	}
 	// private methods for parsing and caluclation
 	
 	private void parseYear(String lineText) throws NumberFormatException {
 		String[] stats = lineText.split(",");
-		try {
-			// parse and save data from columns
+		try { // attmempt parse and save data from columns
 			int y = Integer.parseInt(stats[0]);
 			int pop = Integer.parseInt(stats[1]);
 			int v = Integer.parseInt(stats[2]);
@@ -111,45 +111,55 @@ public class Crime {
 			YearData year = new YearData(y, pop, v, vr, h, hr, r, rr, ro, ror, a, ar, p, pr, b, br, l, lr, m, mr);
 			// add year to ArrayList
 			crimeByYear.add(year);
-		} catch (NumberFormatException e) {
-			
+		} catch (NumberFormatException e) { // if format exception is thrown, print paragraph notification
+			System.out.println("One or more lines in the .csv file that you tried to read is not properly formatted." + 
+			"Please make sure that your document begins with a line containing the following headers: " + 
+			"'Year,Population,Violent crime,Violent crime rate,Murder and nonnegligent manslaughter," +
+			"Murder and nonnegligent manslaughter rate,Rape,Rape rate,Robbery,Robbery rate,Aggravated assault,Aggravated assault rate," +
+			"Property crime,Property crime rate ,Burglary,Burglary rate,Larceny-theft,Larceny-theft rate ,Motor vehicle theft,Motor vehicle theft rate'" + 
+			"Please also make sure that all subsequent rows use the proper number formats: " +
+			"Years and Crime counts (Integer, ex. 1341234), Crime Rates (Double, ex. 1234.09213" +
+			"Lastly, please make sure to delineate column data with commas (','), and do not use traling or leading spaces.");
 		}
 	}
 	// method to calculate and print largest population increase for year
 	private void getMaxPopulationGrowth() {
-		int maxYear = crimeByYear.get(1).getYear();
+		// set max year and max growth to second year, and rate of growth between 1st and second years
+		int maxYear = crimeByYear.get(1).getYear(); 
 		double maxGrowth = (((double)crimeByYear.get(1).getPopulation() - (double)crimeByYear.get(0).getPopulation()) / (double)crimeByYear.get(1).getPopulation()) * 100.0;
-		
-		for (int i = 1; i < crimeByYear.size(); i++) {
+		// iterate through years starting at 3rd year
+		for (int i = 2; i < crimeByYear.size(); i++) {
+			// calculate rate of growth between current and prvious year
 			double yearGrowth = (((double)crimeByYear.get(i).getPopulation() - (double)crimeByYear.get(i - 1).getPopulation()) / (double)crimeByYear.get(i).getPopulation()) * 100.0;
-			
+			// current growth is greater than max growth set max to current
 			if (yearGrowth > maxGrowth) {
 				maxGrowth = yearGrowth;
 				maxYear = crimeByYear.get(i).getYear();
 			}
 		}
-		
+		// print max
 		System.out.println("The Population Growth was highest during " + (maxYear - 1) + "-" + maxYear);
 	}
-	
+	// method to find and print year with highest murder rate
 	private void getMaxMurderYear() {
+		//set max year and max rate 
 		int maxYear = crimeByYear.get(0).getYear();
 		double maxHomicideRate = crimeByYear.get(0).getHomicideRate();
 		// iterate from second year in list
 		for (int i = 1; i < crimeByYear.size(); i++) {
-			if (crimeByYear.get(i).getHomicideRate() > maxHomicideRate) {
+			if (crimeByYear.get(i).getHomicideRate() > maxHomicideRate) { // set maxs if current year is greater than max
 				maxYear = crimeByYear.get(i).getYear();
 				maxHomicideRate = crimeByYear.get(i).getHomicideRate();
 			}
 		}
-		
+		// print max
 		System.out.println("The Murder rate was highest in " + maxYear);
 	}
-	
+	// method to find and print max year; functionally similar to getMaxMurderYear but switchs > with < 
 	private void getMinMurderYear() {
 		int minYear = crimeByYear.get(0).getYear();
 		double minHomicideRate = crimeByYear.get(0).getHomicideRate();
-		// iterate from second year in list
+		
 		for (int i = 1; i < crimeByYear.size(); i++) {
 			if (crimeByYear.get(i).getHomicideRate() < minHomicideRate) {
 				minYear = crimeByYear.get(i).getYear();
@@ -159,11 +169,11 @@ public class Crime {
 		
 		System.out.println("The Murder rate was lowest in " + minYear);
 	}
-	
+	// method to find and print max year for robbery; similar to maxMurderYear
 	private void getMaxRobberyYear() {
 		int maxYear = crimeByYear.get(0).getYear();
 		double maxRobberyRate = crimeByYear.get(0).getRobberyRate();
-		// iterate from second year in list
+		
 		for (int i = 1; i < crimeByYear.size(); i++) {
 			if (crimeByYear.get(i).getRobberyRate() > maxRobberyRate) {
 				maxYear = crimeByYear.get(i).getYear();
@@ -173,11 +183,11 @@ public class Crime {
 		
 		System.out.println("The Robbery rate was highest in " + maxYear);
 	}
-	
+	// method to find and print min year for robery; functionally similar to getMaxMurderYear but switchs > with < and uses robbery
 	private void getMinRobberyYear() {
 		int minYear = crimeByYear.get(0).getYear();
 		double minRobberyRate = crimeByYear.get(0).getRobberyRate();
-		// iterate from second year in list
+		
 		for (int i = 1; i < crimeByYear.size(); i++) {
 			if (crimeByYear.get(i).getRobberyRate() < minRobberyRate) {
 				minYear = crimeByYear.get(i).getYear();

@@ -6,7 +6,7 @@
   * getter methods
 */
 public class YearData {
-	// fields for holding data; public to avoid need for getter methods
+	// fields for holding data; public to avoid need for getter methods (not all were used in calcualtions)
 	private int year;
 	private int population;
 	private int violent;
