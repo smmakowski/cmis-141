@@ -16,12 +16,13 @@ public class SentimentAnalysis {
   			// create fileScanner
   			scan = new Scanner(new File("subjclueslen1-HLTEMNLP05.txt"));
   			// while there are more lines to parse
-  			while (scan.hasNextLine()) {
+  			while (scan.hasNext()) {
+          linesRead++; // increment line
   				lineText = scan.nextLine(); // scan
-          System.out.println(lineText);
+
           parseLine(lineText); // parse score with method
-  				linesRead++; //increment line
   			}
+        System.out.println("Lines read" + lineNum);
   		} catch (FileNotFoundException e) { // if exception thrown then exit
   			System.err.println("Unable to find file. Please make sure that your file path is correct.");
   		} finally { // after scan is done, close scanner, if created
@@ -46,7 +47,9 @@ public class SentimentAnalysis {
       // split the line into A=B pairs
       String[]pairs = line.split(" ");
       String word = pairs[2].split("=")[1]; // get word
+
       String polarity = pairs[5].split("=")[1]; // get polarity
+
       // score based on popularity
       if (polarity.equals("positive")) {
         score = 1;
@@ -55,6 +58,8 @@ public class SentimentAnalysis {
       } else { // for netural (not else if since only 3 options)
         score = 0;
       }
+      System.out.println("WORD: " + word);
+      System.out.println("SCORE: " + score);
       wordScores.put(word, score); // add to hashmap
     }
 
