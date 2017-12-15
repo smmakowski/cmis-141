@@ -48,7 +48,8 @@ public class SentimentAnalysis {
   		} catch (FileNotFoundException e) { // if exception thrown then exit
   			System.err.println("Unable to find one or more files. Please make sure" +
         "that files are in same directory, or change file path(s) in SentimentAnalysis.java.");
-  		} finally { // after scan is done, close scanner, if created
+        System.exit(1);
+  		}
         System.out.println("");
         System.out.println("Files have been read succesfully! Opening Main Menu!");
 
@@ -56,7 +57,6 @@ public class SentimentAnalysis {
   				scan.close();
   			}
         promptUser(); // start menu
-  		}
   	}
 
     // method to print file;
