@@ -41,6 +41,5 @@ public class CrimeTest {
 			System.out.println("No file path argument provided. Please run the program with the file path for the crime data as an argument (ex. java CrimeTest Crime.csv).");
 			System.exit(1); // exit 
 		}
-		
 	}
 }

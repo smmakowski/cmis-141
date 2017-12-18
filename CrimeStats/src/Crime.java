@@ -60,7 +60,7 @@ public class Crime {
 			// swtich for selection 
 			switch (selection) {
 				case "1": // case for question number
-					getMaxPopulationGrowth(); // run related method
+					getPopulationGrowthForAllYears(); // run related method
 					break;
 				case "2":
 					getMaxMurderYear();
@@ -130,7 +130,7 @@ public class Crime {
 		// iterate through years starting at 3rd year
 		for (int i = 2; i < crimeByYear.size(); i++) {
 			// calculate rate of growth between current and prvious year
-			double yearGrowth = (((double)crimeByYear.get(i).getPopulation() - (double)crimeByYear.get(i - 1).getPopulation()) / (double)crimeByYear.get(i).getPopulation()) * 100.0;
+			double yearGrowth = (((double)crimeByYear.get(i).getPopulation() - (double)crimeByYear.get(i - 1).getPopulation()) / (double)crimeByYear.get(i - 1).getPopulation()) * 100.0;
 			// current growth is greater than max growth set max to current
 			if (yearGrowth > maxGrowth) {
 				maxGrowth = yearGrowth;
@@ -139,6 +139,14 @@ public class Crime {
 		}
 		// print max
 		System.out.println("The Population Growth was highest during " + (maxYear - 1) + "-" + maxYear);
+	}
+	private void getPopulationGrowthForAllYears() {
+		for (int i = 1; i < crimeByYear.size(); i++) {
+			// calculate rate of growth between current and prvious year
+			double yearGrowth = (((double)crimeByYear.get(i).getPopulation() - (double)crimeByYear.get(i - 1).getPopulation()) / (double)crimeByYear.get(i - 1).getPopulation()) * 100.0;
+			int endYear = crimeByYear.get(i).getYear();
+			System.out.println("Population growth for " + (endYear - 1) + "-" + endYear + " is " + yearGrowth + "%.");
+		}
 	}
 	// method to find and print year with highest murder rate
 	private void getMaxMurderYear() {
