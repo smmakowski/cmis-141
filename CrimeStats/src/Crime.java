@@ -142,7 +142,7 @@ public class Crime {
 	}
 	private void getPopulationGrowthForAllYears() {
 		for (int i = 1; i < crimeByYear.size(); i++) {
-			// calculate rate of growth between current and prvious year
+			// iterate and print growth for that year
 			double yearGrowth = (((double)crimeByYear.get(i).getPopulation() - (double)crimeByYear.get(i - 1).getPopulation()) / (double)crimeByYear.get(i - 1).getPopulation()) * 100.0;
 			int endYear = crimeByYear.get(i).getYear();
 			System.out.println("Population growth for " + (endYear - 1) + "-" + endYear + " is " + yearGrowth + "%.");
